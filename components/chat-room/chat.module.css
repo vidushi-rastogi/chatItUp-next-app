@@ -1,0 +1,45 @@
+.sider {
+    height: 100vh;
+    background-color: #ECECEC;
+    padding: 10px;
+    min-width: 300px;
+    overflow-y: hidden;
+}
+.chatRow {
+    border-bottom: 1px solid gray;
+    padding: 20px 10px 20px 10px;
+    cursor: pointer;
+}
+.chatRow:hover{
+    background-color: aliceblue;
+}
+.chatUserName {
+    margin: 0;
+}
+.chatUserPhoto {
+    font-size: 25px;
+}
+
+
+.chatUserSide {
+    display: flex;
+    justify-content: flex-end;
+}
+.chatOtherSide {
+    display: flex;
+    justify-content: flex-start;
+}
+.chatUserBubble {
+    padding: 10px;
+    border: 1px solid rgb(222, 222, 222);
+    background-color: aliceblue;
+    border-radius: 10px;
+    margin-bottom: 5px;
+}
+.chatOtherBubble {
+    padding: 10px;
+    border: 1px solid rgb(222, 222, 222);
+    background-color: #ECECEC;
+    border-radius: 10px;
+    margin-bottom: 5px;
+}

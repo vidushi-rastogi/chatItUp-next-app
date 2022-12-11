@@ -1,0 +1,22 @@
+.SignIn {
+  text-align: center;
+  border-right: 1px solid black;
+  cursor: pointer;
+}
+.SignIn:hover {
+  background-color: #ECECEC;
+}
+.SignIn Button {
+  font-size: 25px;
+}
+.SignUp {
+  text-align: center;
+  font-size: 25px;
+  cursor: pointer;
+}
+.SignUp:hover {
+  background-color: #ECECEC;
+}
+.SignUp Button {
+  font-size: 25px;
+}
