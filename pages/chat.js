@@ -26,12 +26,12 @@ export default function Chat({chatUsers, chatNotifications, chatLogs}) {
     return <Layout>
     <Header><PageHeader chatNotifications={chatNotifications}/></Header>
     <Layout>
-      <Content style={{maxWidth: '75%'}}>
+      <Content style={{maxWidth: '75%', maxHeight: '500px'}}>
         <ChatLog 
           chatLogs={chatLogs} 
           currentActiveChat={currentActiveChat}  
         />
-        <ChatInput />
+        {currentActiveChat !== '' ? <ChatInput currentActiveChat={currentActiveChat}/> : <></>}
       </Content>
       <Sider>
         <PageSider 

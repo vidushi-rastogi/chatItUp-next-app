@@ -1,0 +1,102 @@
+{
+    "example-viiichaan":[
+       {
+          "side":"example",
+          "time":"12:01 AM",
+          "date":"04-12-2022",
+          "message":"Happy Birthday bro!"
+       },
+       {
+          "side":"viiichaan",
+          "time":"12:22 AM",
+          "date":"04-12-2022",
+          "message":"Thanks ghodi"
+       },
+       {
+          "side":"example",
+          "time":"12:25 AM",
+          "date":"04-12-2022",
+          "message":"Bhai party kab milri hai??"
+       },
+       {
+          "side":"example",
+          "time":"12:25 AM",
+          "date":"04-12-2022",
+          "message":"Abki baar toh goli mat de yaar, momos hi khilva de bhai."
+       },
+       {
+          "side":"viiichaan",
+          "time":"12:25 AM",
+          "date":"04-12-2022",
+          "message":"Bakk bhosdiki"
+       }
+    ],
+    "example-imranansari":[
+       {
+          "side":"example",
+          "time":"12:01 AM",
+          "date":"04-12-2022",
+          "message":"Hey!"
+       },
+       {
+          "side":"imranansari",
+          "time":"12:22 AM",
+          "date":"04-12-2022",
+          "message":"Yo!"
+       },
+       {
+          "side":"example",
+          "time":"12:25 AM",
+          "date":"04-12-2022",
+          "message":"Aur btao kya chalra hai?"
+       },
+       {
+          "side":"example",
+          "time":"12:25 AM",
+          "date":"04-12-2022",
+          "message":"kesa hai sab?"
+       },
+       {
+          "side":"imranansari",
+          "time":"12:26 AM",
+          "date":"04-12-2022",
+          "message":"Bdiya hai tum btaao?"
+       },
+       {
+          "side":"example",
+          "time":"12:30 AM",
+          "date":"04-12-2022",
+          "message":"Mai bhi mast."
+       },
+       {
+          "side":"imranansari",
+          "time":"12:31 AM",
+          "date":"04-12-2022",
+          "message":"Kahi chale ghumne?"
+       },
+       {
+          "side":"imranansari",
+          "time":"12:31 AM",
+          "date":"04-12-2022",
+          "message":"Aas paas hi"
+       },
+       {
+          "side":"example",
+          "time":"12:32 AM",
+          "date":"04-12-2022",
+          "message":"Haan chal skte hai bilkul."
+       },
+       {
+          "side":"imranansari",
+          "time":"12:34 AM",
+          "date":"04-12-2022",
+          "message":"Bdiya jagah btaao fir?"
+       },
+       {
+          "side":"example",
+          "time":"12:37 AM",
+          "date":"04-12-2022",
+          "message":"Ab yeh bhi mai krru?"
+       }
+    ]
+ }
