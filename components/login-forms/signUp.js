@@ -1,4 +1,5 @@
 import { Form, Input, Button, Card, notification } from 'antd';
+import { signIn } from 'next-auth/react';
 import styles from './loginForm.module.css';
 
 export default function SignUp() {
@@ -21,10 +22,20 @@ export default function SignUp() {
         'Content-Type': 'application/json'
       }
     })
-    const status = await res.status;
+    const status = res.status;
     if (status === 200) {
-      popNotification('success', null);
-      window.location.href = '/chat';
+      const response = await signIn('credentials', {
+        username: values.username,
+        password: values.password,
+        redirect: false
+      })
+      if(response.error) {
+        popNotification('error', response.error);
+      }
+      else {
+        popNotification('success', null);
+        window.location.href = '/chat';
+      }
     }
     else {
       popNotification('error', 'Something went wrong while registering your account :(')
