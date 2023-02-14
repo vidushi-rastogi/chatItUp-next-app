@@ -5,7 +5,7 @@ import User from "../../../model/userSchema";
 
 const authOptions = {
     session: {
-        strategy: 'jwt'
+        strategy: "jwt",
     },
     providers: [
         CredentialsProvider({
@@ -26,12 +26,22 @@ const authOptions = {
                 if (user && password !== user.password) {
                     throw new Error('You have entered invalid password');
                 }
-                return {username: username, state: 'Logged In'}
+                return Promise.resolve(user);
             }
         })
     ],
     pages: {
         signIn: '/'
+    },
+    callbacks: {
+        jwt: async ({ token, user }) => {
+            user && (token.user = user)
+            return token
+        },
+        session: async ({ session, token }) => {
+            session.user = token.user
+            return session
+        }
     }
 }
 

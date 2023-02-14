@@ -1,10 +1,12 @@
-import { Row, Col, Popover, Card, Modal } from 'antd';
+import { Row, Col, Popover, Modal } from 'antd';
 import {
     BellFilled,
-    SettingFilled
+    SettingFilled,
 } from '@ant-design/icons';
 import styles from './layout.module.css';
 import { useState } from 'react';
+import { signOut } from 'next-auth/react';
+import SearchChatPartner from './searchChatPartner';
 
 const settings = ['Profile Settings', 'Privacy Settings', 'Log Out'];
 
@@ -20,7 +22,7 @@ const notifications = (chatNotifications) => (
 )
 
 
-export default function PageHeader({ home, chatNotifications }) {
+export default function PageHeader({ home, chatNotifications, session }) {
     const [selectedSettingOption, setSelectedSettingOption] = useState('');
     const [showLogOutModal, setShowLogOutModal] = useState(false);
 
@@ -36,7 +38,8 @@ export default function PageHeader({ home, chatNotifications }) {
 
     const handleLogOut = () => {
         setShowLogOutModal(false);
-        window.location.href = '/';
+        signOut({ callbackUrl: 'http://localhost:3000' });
+        // window.location.href = '/';
     };
     const handleCancelLogOut = () => {
         setShowLogOutModal(false);
@@ -67,32 +70,38 @@ export default function PageHeader({ home, chatNotifications }) {
 
 
     return <div>
-        <Row>
-            <Col span={22} className={styles.header}>
+        <Row justify='space-between'>
+            <Col span={3} className={styles.header}>
                 <h1>ChatItUp!</h1>
             </Col>
-            {!home ? <Col span={2}>
-                <Row>
-                    <Col span={12}>
-                        <Popover
-                            content={notifications(chatNotifications)}
-                            title="Chat Requests"
-                            trigger="click"
-                        >
-                            <BellFilled className={styles.headerIcons} />
-                        </Popover>
+            {!home ? <Col span={6}>
+                        <SearchChatPartner session={session}/>
+                    </Col> : <></>}
+            {!home ?
+                <>
+                    <Col span={2}>
+                        <Row>
+                            <Col span={12}>
+                                <Popover
+                                    content={notifications(chatNotifications)}
+                                    title="Chat Requests"
+                                    trigger="click"
+                                >
+                                    <BellFilled className={styles.headerIcons} />
+                                </Popover>
+                            </Col>
+                            <Col span={12}>
+                                <Popover
+                                    content={settingOptions}
+                                    title="Settings"
+                                    trigger="click"
+                                >
+                                    <SettingFilled className={styles.headerIcons} />
+                                </Popover>
+                            </Col>
+                        </Row>
                     </Col>
-                    <Col span={12}>
-                        <Popover
-                            content={settingOptions}
-                            title="Settings"
-                            trigger="click"
-                        >
-                            <SettingFilled className={styles.headerIcons} />
-                        </Popover>
-                    </Col>
-                </Row>
-            </Col>
+                </>
                 :
                 <Col span={2}></Col>}
         </Row>
