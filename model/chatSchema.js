@@ -22,6 +22,10 @@ const chatSchema = new mongoose.Schema({
         required: true,
         unique: true
     },
+    participants: {
+        type: [String],
+        required: true
+    },
     chats: {
         type: [Chats],
         default: []

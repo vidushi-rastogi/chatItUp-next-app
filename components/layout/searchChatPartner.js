@@ -7,7 +7,7 @@ import {
 
 const { Option } = Select;
 
-export default function SearchChatPartner({ session }) {
+export default function SearchChatPartner({ session, chatPartners, setChatPartners }) {
   const [searchedUsers, setSearchedUsers] = useState([]);
   const [searchedValue, setSearchedValue] = useState('');
 
@@ -23,6 +23,7 @@ export default function SearchChatPartner({ session }) {
       method: 'POST',
       body: JSON.stringify({
         chatId: `${session.user.username}_${partnerUsername}`,
+        participants: [session.user.username, partnerUsername],
         chats: []
       }),
       header: {
@@ -31,7 +32,17 @@ export default function SearchChatPartner({ session }) {
     });
     const status = res.status;
     if (status === 200) {
+      let currentChatPartners = chatPartners;
+      setChatPartners([...currentChatPartners, partnerUsername]);
+      if (typeof window !== 'undefined') {
+        let userDetails = JSON.parse(localStorage.getItem('userDetails'));
+        userDetails.chatPartners = [...currentChatPartners, partnerUsername];
+        localStorage.setItem('userDetails', JSON.stringify(userDetails));
+      }
       popNotification('success', 'This user has been added as your chat partner :)');
+    }
+    if (status === 404) {
+      popNotification('error', 'This user is already one of your chat partner.')
     }
     else {
       popNotification('error', 'Something went wrong while adding this user as your chat partner :(')
@@ -54,7 +65,9 @@ export default function SearchChatPartner({ session }) {
       await fetch(`/api/getAllUsers?key=${value}`)
         .then((res) => res.json())
         .then((response) => {
-          setSearchedUsers(response.users);
+          const filteredUsers = response.users.filter(user => 
+            user.username !== session.user.username && !chatPartners.includes(user.username))
+          setSearchedUsers(filteredUsers);
         })
     }
     else {

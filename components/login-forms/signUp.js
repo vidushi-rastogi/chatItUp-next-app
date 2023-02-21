@@ -16,7 +16,8 @@ export default function SignUp() {
       method: 'POST',
       body: JSON.stringify({
         username: values.username,
-        password: values.password
+        password: values.password,
+        chatPartners: [],
       }),
       headers: {
         'Content-Type': 'application/json'
@@ -34,7 +35,6 @@ export default function SignUp() {
       }
       else {
         popNotification('success', null);
-        window.location.href = '/chat';
       }
     }
     else {

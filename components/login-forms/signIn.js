@@ -22,7 +22,6 @@ export default function SignIn() {
     }
     else {
       popNotification('success', null);
-      window.location.href = '/chat';
     }
   }
 

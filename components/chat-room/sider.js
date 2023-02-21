@@ -4,7 +4,7 @@ import {
 } from '@ant-design/icons';
 import styles from './chat.module.css';
 
-export default function PageSider({chatUsers, setCurrentActiveChat}) {
+export default function PageSider({chatUsers, setCurrentActiveChat, session, chatPartners}) {
 
     const handleCurrentActiveChatChange = (currentActiveChatUsername) => {
         setCurrentActiveChat(currentActiveChatUsername)
@@ -17,17 +17,17 @@ export default function PageSider({chatUsers, setCurrentActiveChat}) {
                     <h3 style={{marginTop:'0'}}>Your Chats</h3>
                 </Col>
             </Row>
-            {chatUsers.map(user => (
+            {chatPartners.map(partner => (
             <Row 
                 className={styles.chatRow}
-                key={user.username}
-                onClick={() => handleCurrentActiveChatChange(user.username)}
+                key={partner}
+                onClick={() => handleCurrentActiveChatChange(partner)}
             >
                 <Col span={4}>
                     <MehTwoTone className={styles.chatUserPhoto}/>
                 </Col>
                 <Col span={20}>
-                    <h4 className={styles.chatUserName}>@{user.username}</h4>
+                    <h4 className={styles.chatUserName}>@{partner}</h4>
                 </Col>
             </Row>
             ))}
