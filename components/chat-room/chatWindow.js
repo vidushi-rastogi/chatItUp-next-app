@@ -5,9 +5,21 @@ import {
 } from '@ant-design/icons';
 import styles from './chat.module.css';
 
-export default function ChatLog({ chatLogs, currentActiveChat }) {
-    const userChatLog = chatLogs[currentActiveChat];
+const ChatDate = (date) => {
+    let d = new Date(date.date);
+    const month = d.getMonth() + 1 > 9 ? `${d.getMonth() + 1}` : `0${d.getMonth() + 1}`
+    const dateTime = `${d.getDate()}-${month}-${d.getFullYear()} ${d.getHours()}:${d.getMinutes()}:${d.getSeconds()}`
+    return <p style={{
+        margin: '0',
+        padding: '0',
+        color: 'rgb(157, 157, 157)'
+    }}>
+        {dateTime}
+    </p>
+}
 
+export default function ChatLog({ userChats, session, currentActiveChat }) {
+    const activeChat = userChats.filter(chat => chat.participants.includes(currentActiveChat))[0];
     const initialChatWindow = (
         <>
             <p>Welcome to your chat room.</p>
@@ -18,20 +30,14 @@ export default function ChatLog({ chatLogs, currentActiveChat }) {
     return <div style={{
         padding: '20px',
         overflowY: 'auto',
-        maxHeight: '90vh'
+        height: '75vh'
     }}>
-        {userChatLog ? userChatLog.map(chatLog =>
-            <Row className={chatLog.side === 'user' ? styles.chatUserSide : styles.chatOtherSide}>
-                <Col className={chatLog.side === 'user' ? styles.chatUserBubble : styles.chatOtherBubble}>
-                    <p style={{ margin: '0', padding: '0' }}>{chatLog.message}</p>
+        {activeChat ? activeChat.chats.map(chatLog =>
+            <Row className={chatLog.username === session.user.username ? styles.chatUserSide : styles.chatOtherSide}>
+                <Col className={chatLog.username === session.user.username ? styles.chatUserBubble : styles.chatOtherBubble}>
+                    <p style={{ margin: '0', padding: '0' }}>{chatLog.content}</p>
                     <div style={{ textAlign: 'end', paddingTop: '3px' }}>
-                        <p style={{
-                            margin: '0',
-                            padding: '0',
-                            color: 'rgb(157, 157, 157)'
-                        }}>
-                            {chatLog.time}
-                        </p>
+                        <ChatDate date={chatLog.timestamp}/>
                     </div>
                 </Col>
             </Row>

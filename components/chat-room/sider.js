@@ -4,7 +4,7 @@ import {
 } from '@ant-design/icons';
 import styles from './chat.module.css';
 
-export default function PageSider({chatUsers, setCurrentActiveChat, session, chatPartners}) {
+export default function PageSider({ setCurrentActiveChat, chatPartners}) {
 
     const handleCurrentActiveChatChange = (currentActiveChatUsername) => {
         setCurrentActiveChat(currentActiveChatUsername)

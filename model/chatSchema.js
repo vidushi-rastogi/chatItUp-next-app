@@ -12,7 +12,7 @@ const Chats = new mongoose.Schema({
     },
     timestamp: {
         type: Date,
-        default: Date()
+        default: new Date()
     }
 })
 

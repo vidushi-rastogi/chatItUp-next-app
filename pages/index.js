@@ -12,7 +12,6 @@ const { Header, Content, Footer } = Layout;
 
 export default function Home() {
   const [loginOption, setLoginOption] = useState('SignIn');
-  const [existingChatPartners, setExistingChatPartners] = useState([]);
   const { data: session, status } = useSession();
 
   useEffect(() => {
@@ -29,7 +28,6 @@ export default function Home() {
         .catch(error => console.log('ERROR: While retrieving user details : ', error))
       }
       storeUserDetails();
-      
     }
   }, [status])
 
