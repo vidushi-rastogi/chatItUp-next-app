@@ -22,7 +22,7 @@ const notifications = (chatNotifications) => (
 )
 
 
-export default function PageHeader({ home, chatNotifications, session }) {
+export default function PageHeader({ home, chatNotifications, session, chatPartners, setChatPartners }) {
     const [selectedSettingOption, setSelectedSettingOption] = useState('');
     const [showLogOutModal, setShowLogOutModal] = useState(false);
 
@@ -38,6 +38,9 @@ export default function PageHeader({ home, chatNotifications, session }) {
 
     const handleLogOut = () => {
         setShowLogOutModal(false);
+        if (typeof window !== 'undefined') {
+            localStorage.removeItem('userDetails');
+        }
         signOut({ callbackUrl: 'http://localhost:3000' });
         // window.location.href = '/';
     };
@@ -75,7 +78,10 @@ export default function PageHeader({ home, chatNotifications, session }) {
                 <h1>ChatItUp!</h1>
             </Col>
             {!home ? <Col span={6}>
-                        <SearchChatPartner session={session}/>
+                        <SearchChatPartner 
+                            session={session} 
+                            chatPartners={chatPartners}
+                            setChatPartners={setChatPartners}/>
                     </Col> : <></>}
             {!home ?
                 <>

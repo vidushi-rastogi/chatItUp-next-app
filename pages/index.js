@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
 import { Layout, Card, Row, Col, Button } from 'antd';
@@ -13,10 +13,23 @@ const { Header, Content, Footer } = Layout;
 export default function Home() {
   const [loginOption, setLoginOption] = useState('SignIn');
   const { data: session, status } = useSession();
-  
-  if (status === 'authenticated') {
-    window.location.href = '/chat';
-  }
+
+  useEffect(() => {
+    if (status === 'authenticated') {
+      const storeUserDetails = async () => {
+        await fetch(`/api/getUserDetails?username=${session.user.username}`, {
+          method: 'GET'
+        })
+        .then(async (res) => {
+          const userDetailsResponse = await res.json();
+          localStorage.setItem('userDetails', JSON.stringify(userDetailsResponse.user));
+          window.location.href = '/chat';
+        })
+        .catch(error => console.log('ERROR: While retrieving user details : ', error))
+      }
+      storeUserDetails();
+    }
+  }, [status])
 
   const optionSelected = (option) => {
     setLoginOption(option)

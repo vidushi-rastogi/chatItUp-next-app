@@ -1,4 +1,4 @@
-import { Row, Col, Card, Affix, Input } from 'antd';
+import { Row, Col, Card, Affix, Input, notification } from 'antd';
 import {
     SmileOutlined,
     PaperClipOutlined,
@@ -6,22 +6,47 @@ import {
 } from '@ant-design/icons';
 import { useState } from 'react';
 
-export default function ChatInput({ currentActiveChat }) {
+const popNotification = (type, message) => {
+    notification[type]({
+        message
+    })
+}
+
+export default function ChatInput({ session, currentActiveChat, userChats, setUserChats }) {
     const [message, setMessage] = useState('');
-    
+
     const handleSendMessage = async () => {
-        const res = await fetch('/api/postMessage', {
-            method: 'POST',
-            body: JSON.stringify({
-                message: message,
-                chatPartner: currentActiveChat
-            }),
-            headers: {
-                'Content-Type': 'application/json'
+        if (message) {
+            const chatMessage = {
+                username: session.user.username,
+                content: message,
+                contentType: 'text',
+                timestamp: new Date()
             }
-        });
-        const response = await res.json();
-        alert(JSON.stringify(response.message));
+            const res = await fetch('/api/postMessage', {
+                method: 'POST',
+                body: JSON.stringify({
+                    chatMessage: chatMessage,
+                    chatParticipants: [session.user.username, currentActiveChat]
+                }),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+            if (res.status === 200) {
+                const updatedChatLog = userChats.map(chat => {
+                    if (chat.participants.includes(currentActiveChat)) {
+                        chat.chats.push(chatMessage)
+                    }
+                    return chat;
+                })
+                setUserChats(updatedChatLog);
+                setMessage('');
+            }
+            else {
+                popNotification('error', 'Something went wrong while sending your message :(')
+            }
+        }
     }
 
     const emoticonsSelect = (
@@ -40,7 +65,7 @@ export default function ChatInput({ currentActiveChat }) {
     )
 
     return <div style={{
-        maxHeight: '10vh'
+        // maxHeight: '10vh'
     }}>
         <Affix offsetBottom={0}>
             <Row>

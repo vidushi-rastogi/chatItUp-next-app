@@ -12,7 +12,7 @@ const Chats = new mongoose.Schema({
     },
     timestamp: {
         type: Date,
-        default: Date()
+        default: new Date()
     }
 })
 
@@ -21,6 +21,10 @@ const chatSchema = new mongoose.Schema({
         type: String,
         required: true,
         unique: true
+    },
+    participants: {
+        type: [String],
+        required: true
     },
     chats: {
         type: [Chats],
