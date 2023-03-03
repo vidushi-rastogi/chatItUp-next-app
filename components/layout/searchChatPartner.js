@@ -41,7 +41,7 @@ export default function SearchChatPartner({ session, chatPartners, setChatPartne
       }
       popNotification('success', 'This user has been added as your chat partner :)');
     }
-    if (status === 404) {
+    else if (status === 404) {
       popNotification('error', 'This user is already one of your chat partner.')
     }
     else {
