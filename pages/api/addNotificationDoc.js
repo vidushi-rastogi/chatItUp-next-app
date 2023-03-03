@@ -5,7 +5,7 @@ export default async function handler(req, res) {
     try {
         connect();
         await Notification.create(req.body)
-            .then((res) => {
+            .then((response) => {
                 return res.status(200).json({ message: 'Doc added' });
             })
     }

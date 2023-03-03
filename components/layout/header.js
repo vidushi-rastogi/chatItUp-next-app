@@ -22,7 +22,7 @@ const notifications = (chatNotifications) => (
 )
 
 
-export default function PageHeader({ home, chatNotifications, session, chatPartners, setChatPartners }) {
+export default function PageHeader({ home, notification, chatNotifications, session, chatPartners, setChatPartners }) {
     const [selectedSettingOption, setSelectedSettingOption] = useState('');
     const [showLogOutModal, setShowLogOutModal] = useState(false);
 
@@ -77,25 +77,28 @@ export default function PageHeader({ home, chatNotifications, session, chatPartn
             <Col span={3} className={styles.header}>
                 <h1>ChatItUp!</h1>
             </Col>
-            {!home ? <Col span={6}>
-                        <SearchChatPartner 
-                            session={session} 
-                            chatPartners={chatPartners}
-                            setChatPartners={setChatPartners}/>
-                    </Col> : <></>}
+            {!home && !notification ? <Col span={6}>
+                <SearchChatPartner
+                    session={session}
+                    chatPartners={chatPartners}
+                    setChatPartners={setChatPartners} />
+            </Col> : <></>}
             {!home ?
                 <>
                     <Col span={2}>
                         <Row>
-                            <Col span={12}>
-                                <Popover
-                                    content={notifications(chatNotifications)}
-                                    title="Chat Requests"
-                                    trigger="click"
-                                >
-                                    <BellFilled className={styles.headerIcons} />
-                                </Popover>
-                            </Col>
+                            {!notification ?
+                                <Col span={12}>
+                                    <Popover
+                                        content={notifications(chatNotifications)}
+                                        title="Chat Requests"
+                                        trigger="click"
+                                    >
+                                        <BellFilled className={styles.headerIcons} />
+                                    </Popover>
+                                </Col>
+                                :
+                                <Col span={12}></Col>}
                             <Col span={12}>
                                 <Popover
                                     content={settingOptions}
