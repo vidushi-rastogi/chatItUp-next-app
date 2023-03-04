@@ -7,7 +7,7 @@ export default function SignIn() {
   const popNotification = (type, error) => {
     notification[type]({
       message: error ?? 'Welcome to your chat room!',
-      description: error ? 'Your account validation has failed please check the credentials you have input' : 'You are successfully logged in, let\'s chat it up!'
+      description: error ? 'Your account validation has failed please check the credentials you have entered!' : 'You are successfully logged in, let\'s chat it up!'
     })
   }
 

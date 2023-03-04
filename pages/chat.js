@@ -60,7 +60,6 @@ export default function Chat({ chatNotifications }) {
           <ChatInput
             session={session}
             currentActiveChat={currentActiveChat}
-            userChats={userChats}
             setUserChats={setUserChats}/> 
           : <></>}
       </Content>
