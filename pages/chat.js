@@ -69,8 +69,12 @@ export default function Chat() {
         setUserNotifications={setUserNotifications} />
     </Header>
     <Layout>
+<<<<<<< HEAD
       <Content style={{ maxWidth: '75%', maxHeight: '500px' }}>
         <FloatButton icon={<Refresh flag={flag} setFlag={setFlag} />}/>
+=======
+      <Content className='max-w-7xl'>
+>>>>>>> dabeb52 (Updated side for active chat & scroll for side bar)
         <ChatLog
           userChats={userChats}
           session={session}
