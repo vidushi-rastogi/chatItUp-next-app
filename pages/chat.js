@@ -23,21 +23,21 @@ export default function Chat({ chatNotifications }) {
   const [userChats, setUserChats] = useState([]);
   const { data: session, status } = useSession();
   useEffect(() => {
-    // if (localStorage) {
+    if (status === 'authenticated') {
       const currentUserDetails = JSON.parse(localStorage.getItem('userDetails'))
       setChatPartners(currentUserDetails.chatPartners);
-    // }
-    if (session) { 
-      const getUserChats = async () => {
-        await fetch(`/api/getUserChats?username=${session.user.username}`, {
-          method: 'GET'
-        })
-        .then(async (res) => {
-          const userChatsResponse = await res.json();
-          setUserChats(userChatsResponse.chats)
-        })
+      if (session) { 
+        const getUserChats = async () => {
+          await fetch(`/api/getUserChats?username=${session.user.username}`, {
+            method: 'GET'
+          })
+          .then(async (res) => {
+            const userChatsResponse = await res.json();
+            setUserChats(userChatsResponse.chats)
+          })
+        }
+        getUserChats();
       }
-      getUserChats();
     }
   }, [status])
   
