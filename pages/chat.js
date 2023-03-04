@@ -50,7 +50,7 @@ export default function Chat({ chatNotifications }) {
         setChatPartners={setChatPartners}/>
     </Header>
     <Layout>
-      <Content style={{ maxWidth: '75%', maxHeight: '500px' }}>
+      <Content className='max-w-7xl'>
         <ChatLog
           userChats={userChats}
           session={session}
@@ -67,6 +67,7 @@ export default function Chat({ chatNotifications }) {
         <PageSider
           setCurrentActiveChat={setCurrentActiveChat}
           chatPartners={chatPartners}
+          currentActiveChat={currentActiveChat}
         />
       </Sider>
     </Layout>
