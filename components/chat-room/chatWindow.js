@@ -19,7 +19,7 @@ const ChatDate = (date) => {
 }
 
 export default function ChatLog({ userChats, session, currentActiveChat }) {
-    const activeChat = userChats.filter(chat => chat.participants.includes(currentActiveChat))[0];
+    const activeChat = userChats && userChats.filter(chat => chat.participants.includes(currentActiveChat))[0];
     const initialChatWindow = (
         <>
             <p>Welcome to your chat room.</p>

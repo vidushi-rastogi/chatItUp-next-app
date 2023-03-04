@@ -8,11 +8,16 @@ import { useState } from 'react';
 
 const popNotification = (type, message) => {
     notification[type]({
-        message
-    })
-}
+        message,
+    });
+};
 
-export default function ChatInput({ session, currentActiveChat, userChats, setUserChats }) {
+export default function ChatInput({
+    session,
+    currentActiveChat,
+    userChats,
+    setUserChats,
+}) {
     const [message, setMessage] = useState('');
 
     const handleSendMessage = async () => {
@@ -21,37 +26,39 @@ export default function ChatInput({ session, currentActiveChat, userChats, setUs
                 username: session.user.username,
                 content: message,
                 contentType: 'text',
-                timestamp: new Date()
-            }
+                timestamp: new Date(),
+            };
             const res = await fetch('/api/postMessage', {
                 method: 'POST',
                 body: JSON.stringify({
                     chatMessage: chatMessage,
-                    chatParticipants: [session.user.username, currentActiveChat]
+                    chatParticipants: [session.user.username, currentActiveChat],
                 }),
                 headers: {
-                    'Content-Type': 'application/json'
-                }
+                    'Content-Type': 'application/json',
+                },
             });
             if (res.status === 200) {
-                const updatedChatLog = userChats.map(chat => {
-                    if (chat.participants.includes(currentActiveChat)) {
-                        chat.chats.push(chatMessage)
+                const updateChats = await fetch(
+                    `/api/getUserChats?username=${session.user.username}`,
+                    {
+                        method: 'GET',
                     }
-                    return chat;
-                })
-                setUserChats(updatedChatLog);
+                ).then(async (res) => {
+                    return await res.json();
+                });
+                setUserChats(updateChats.chats);
                 setMessage('');
-            }
-            else {
-                popNotification('error', 'Something went wrong while sending your message :(')
+            } else {
+                popNotification(
+                    'error',
+                    'Something went wrong while sending your message :('
+                );
             }
         }
-    }
+    };
 
-    const emoticonsSelect = (
-        <SmileOutlined />
-    )
+    const emoticonsSelect = <SmileOutlined />;
 
     const attachAndSendOptions = (
         <Row style={{ width: '90px' }}>
