@@ -15,7 +15,7 @@ export default async function handler(req, res) {
             }
         }
         catch (error) {
-
+            return res.status(400).json({message: 'Error while getting details from User collection', error});
         }
     }
     catch(error) {

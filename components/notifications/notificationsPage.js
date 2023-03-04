@@ -47,10 +47,9 @@ const ActionButtons = ({type}) => (
 )
 
 export default function NotificationsPage({ type, notifications }) {
-    console.log('TYPE AND NOTIFICATIONS : ', type, notifications)
     const totalNotifications = notifications.length;
     const [data, setData] = useState(notifications.slice(0, 5));
-    console.log('data : ', notifications.slice(0, 5))
+
     const appendData = () => {
         if (data.length < totalNotifications) {
             if (totalNotifications - data.length > 5) {
@@ -71,7 +70,6 @@ export default function NotificationsPage({ type, notifications }) {
     };
     return (
         <List>
-            {console.log('item : ', data)}
             <VirtualList
                 data={data}
                 height={350}
