@@ -21,33 +21,44 @@ export default function Chat({ chatNotifications }) {
   const [currentActiveChat, setCurrentActiveChat] = useState('');
   const [chatPartners, setChatPartners] = useState([]);
   const [userChats, setUserChats] = useState([]);
+  const [userNotifications, setUserNotifications] = useState({});
   const { data: session, status } = useSession();
   useEffect(() => {
     if (status === 'authenticated') {
       const currentUserDetails = JSON.parse(localStorage.getItem('userDetails'))
       setChatPartners(currentUserDetails.chatPartners);
-      if (session) { 
+      if (session) {
         const getUserChats = async () => {
           await fetch(`/api/getUserChats?username=${session.user.username}`, {
             method: 'GET'
           })
-          .then(async (res) => {
-            const userChatsResponse = await res.json();
-            setUserChats(userChatsResponse.chats)
-          })
+            .then(async (res) => {
+              const userChatsResponse = await res.json();
+              setUserChats(userChatsResponse.chats);
+
+              await fetch(`/api/getAllNotifications?username=${session.user.username}`, {
+                method: 'GET'
+              })
+              .then(async(res) => {
+                const userNotificationsResponse = await res.json();
+                setUserNotifications(userNotificationsResponse.notifications);
+              })
+            })
         }
         getUserChats();
       }
     }
   }, [status])
-  
+
   return status === 'authenticated' ? <Layout>
     <Header>
-      <PageHeader 
-        chatNotifications={chatNotifications} 
+      <PageHeader
+        chatNotifications={chatNotifications}
         session={session}
         chatPartners={chatPartners}
-        setChatPartners={setChatPartners}/>
+        setChatPartners={setChatPartners}
+        userNotifications={userNotifications}
+        setUserNotifications={setUserNotifications} />
     </Header>
     <Layout>
       <Content style={{ maxWidth: '75%', maxHeight: '500px' }}>
@@ -56,12 +67,12 @@ export default function Chat({ chatNotifications }) {
           session={session}
           currentActiveChat={currentActiveChat}
         />
-        {currentActiveChat !== '' ? 
+        {currentActiveChat !== '' ?
           <ChatInput
             session={session}
             currentActiveChat={currentActiveChat}
             userChats={userChats}
-            setUserChats={setUserChats}/> 
+            setUserChats={setUserChats} />
           : <></>}
       </Content>
       <Sider>

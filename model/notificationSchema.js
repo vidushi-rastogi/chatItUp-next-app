@@ -7,7 +7,7 @@ const inNotification = new mongoose.Schema({
     type: {
         type: String
     },
-    timeStamp: {
+    timestamp: {
         type: Date,
         required: true,
         default: new Date(),
@@ -21,7 +21,7 @@ const outNotification = new mongoose.Schema({
     type: {
         type: String
     },
-    timeStamp: {
+    timestamp: {
         type: Date,
         required: true,
         default: new Date(),

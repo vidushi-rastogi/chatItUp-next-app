@@ -2,22 +2,23 @@ import connect from "../../lib/mongodb";
 import Notification from "../../model/notificationSchema";
 
 export default async function handler(req, res) {
-    const fromUser = req.body.fromUser;
-    const toUser = req.body.toUser;
-    const type = req.body.type;
-    const acknowledgement = req.body.acknowledgement;
-    const timeStamp = req.body.timeStamp;
+    const requestBody = JSON.parse(req.body);
+    const fromUser = requestBody.fromUser;
+    const toUser = requestBody.toUser;
+    const type = requestBody.type;
+    const acknowledgement = requestBody.acknowledgement;
+    const timestamp = requestBody.timestamp;
 
     const inNotification = {
         sender: fromUser,
         type: type,
-        timeStamp: new Date(timeStamp)
+        timestamp: timestamp
     }
 
     const outNotification = {
         receiver: toUser,
         type: type,
-        timeStamp: new Date(timeStamp)
+        timestamp: timestamp
     }
 
     try {
@@ -33,7 +34,7 @@ export default async function handler(req, res) {
                         {$push: {outgoingNotifications: outNotification}}
                     )
                     .then((response) => {
-                        return res.status(200).json({ message: `Notification log has been added to ${fromUser} and ${toUser}` });
+                        return res.status(200).json({ message: `Notification log has been added to ${fromUser} and ${toUser}`, inNotification, outNotification });
                     })
                 }
                 else {
