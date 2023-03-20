@@ -6,23 +6,19 @@ import {
 import styles from './layout.module.css';
 import { useState } from 'react';
 import { signOut } from 'next-auth/react';
-import SearchChatPartner from './searchChatPartner';
+import SearchChatPartner from './header-components/searchChatPartner';
+import NavNotification from './header-components/notifications';
 
 const settings = ['Profile Settings', 'Privacy Settings', 'Log Out'];
 
-const notifications = (chatNotifications) => (
-    <div className={styles.notificationsDiv}>
-        {chatNotifications.map(notification => (
-            <Row className={styles.headerOptionRow}>
-                <Col span={16}>{notification.notification}</Col>
-                <Col span={8} style={{ textAlign: 'end' }}>{notification.time}</Col>
-            </Row>
-        ))}
-    </div>
-)
-
-
-export default function PageHeader({ home, notification, chatNotifications, session, chatPartners, setChatPartners }) {
+export default function PageHeader({
+    home,
+    notification,
+    session,
+    chatPartners,
+    userNotifications,
+    setUserNotifications
+}) {
     const [selectedSettingOption, setSelectedSettingOption] = useState('');
     const [showLogOutModal, setShowLogOutModal] = useState(false);
 
@@ -71,7 +67,6 @@ export default function PageHeader({ home, notification, chatNotifications, sess
         </>
     )
 
-
     return <div>
         <Row justify='space-between'>
             <Col span={3} className={styles.header}>
@@ -81,7 +76,8 @@ export default function PageHeader({ home, notification, chatNotifications, sess
                 <SearchChatPartner
                     session={session}
                     chatPartners={chatPartners}
-                    setChatPartners={setChatPartners} />
+                    userNotifications={userNotifications}
+                    setUserNotifications={setUserNotifications}/>
             </Col> : <></>}
             {!home ?
                 <>
@@ -89,13 +85,16 @@ export default function PageHeader({ home, notification, chatNotifications, sess
                         <Row>
                             {!notification ?
                                 <Col span={12}>
-                                    <Popover
-                                        content={notifications(chatNotifications)}
+                                    {/* <Popover
+                                        content={<Notifications chatNotifications={chatNotifications}/>}
                                         title="Chat Requests"
                                         trigger="click"
                                     >
                                         <BellFilled className={styles.headerIcons} />
-                                    </Popover>
+                                    </Popover> */}
+                                    <NavNotification 
+                                        userNotifications={userNotifications}
+                                        setUserNotifications={setUserNotifications}/>
                                 </Col>
                                 :
                                 <Col span={12}></Col>}

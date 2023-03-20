@@ -2,9 +2,10 @@ import connect from '../../lib/mongodb';
 import Notification from '../../model/notificationSchema';
 
 export default async function handler(req, res) {
-    const username = req.body.username;
-    const notificationType = req.body.notificationType;
-    const notificationId = req.body.notificationId;
+    const requestData = JSON.parse(req.body);
+    const username = requestData.username;
+    const notificationType = requestData.notificationType;
+    const notificationId = requestData.notificationId;
 
     try {
         connect();

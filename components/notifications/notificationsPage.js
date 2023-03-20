@@ -3,50 +3,39 @@ import { Avatar, Button, List, message, Row, Col, Tooltip } from 'antd';
 import VirtualList from 'rc-virtual-list';
 import {
     UserOutlined,
-    CheckOutlined,
-    CloseOutlined
 } from '@ant-design/icons';
+import ActionButtons from './actionButtons';
 
-const NotificationDescription = ({ type, notificationType }) => (
+const NotificationDate = (date) => {
+    let d = new Date(date.date);
+    const month = d.getMonth() + 1 > 9 ? `${d.getMonth() + 1}` : `0${d.getMonth() + 1}`
+    const dateTime = `${d.getDate()}-${month}-${d.getFullYear()} ${d.getHours()}:${d.getMinutes()}:${d.getSeconds()}`
+    return <p style={{
+        margin: '0',
+        padding: '0',
+        color: 'rgb(157, 157, 157)'
+    }}>
+        {dateTime}
+    </p>
+}
+
+const NotificationDescription = ({ type, notificationType, timestamp }) => (
     <>
         {notificationType === 'chat_request' ?
             type === 'incoming' ?
                 <p>Sent you a chat request</p>
                 :
                 <p>Received a chat request from you</p>
-        :
-        notificationType === 'request_accepted' ?
-            <p>Accepted your chat request</p>
-        :
-        <></>}
+            :
+            notificationType === 'request_accepted' ?
+                <p>Accepted your chat request</p>
+                :
+                <></>}
+        <NotificationDate date={timestamp}/>
     </>
 )
 
-const ActionButtons = ({type}) => (
-    <div>
-        {type === 'incoming' ? 
-            <Row justify='space-between'>
-                <Col span={12}>
-                    <Tooltip title='Accept'>
-                        <Button 
-                            style={{borderColor: '#1677ff', color: '#1677ff', marginRight: '10px'}} 
-                            shape='circle'
-                            icon={<CheckOutlined />}/>
-                    </Tooltip>
-                </Col>
-                <Col span={12}>
-                    <Tooltip title='Reject'>
-                        <Button danger shape='circle' icon={<CloseOutlined />}/>
-                    </Tooltip>
-                </Col>
-            </Row>
-            :
-            <Button danger>Cancel</Button>
-        }
-    </div>
-)
-
-export default function NotificationsPage({ type, notifications }) {
+export default function NotificationsPage({ type, notifications, session }) {
     const totalNotifications = notifications.length;
     const [data, setData] = useState(notifications.slice(0, 5));
 
@@ -84,10 +73,15 @@ export default function NotificationsPage({ type, notifications }) {
                             {<Avatar
                                 //src={item.picture.large} 
                                 icon={<UserOutlined />} />}
-                            description={<NotificationDescription type={type} notificationType={item.type} />}
+                            description={<NotificationDescription type={type} notificationType={item.type} timestamp={item.timestamp}/>}
                             title={type === 'incoming' ? <p>{item.sender}</p> : <p>{item.receiver}</p>}
                         />
-                        <ActionButtons type={type}/>
+                        <ActionButtons 
+                            type={type} 
+                            notification={item} 
+                            session={session}
+                            setData={setData}
+                            />
                     </List.Item>
                 )}
             </VirtualList>
