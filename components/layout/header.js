@@ -13,7 +13,7 @@ const settings = ['Profile Settings', 'Privacy Settings', 'Log Out'];
 const notifications = (chatNotifications) => (
     <div className={styles.notificationsDiv}>
         {chatNotifications.map(notification => (
-            <Row className={styles.headerOptionRow}>
+            <Row key={notification.time} className={styles.headerOptionRow}>
                 <Col span={16}>{notification.notification}</Col>
                 <Col span={8} style={{ textAlign: 'end' }}>{notification.time}</Col>
             </Row>
