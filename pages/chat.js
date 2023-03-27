@@ -61,8 +61,13 @@ export default function Chat({ chatNotifications }) {
         getUserChats();
       }
     }
+<<<<<<< HEAD
   }, [status, flag])
 
+=======
+  }, [status, session])
+  
+>>>>>>> 3a4961e (fixed build warnings)
   return status === 'authenticated' ? <Layout>
     <Header>
       <PageHeader
