@@ -39,7 +39,7 @@ export default function Chat({ chatNotifications }) {
       }
       getUserChats();
     }
-  }, [status])
+  }, [status, session])
   
   return status === 'authenticated' ? <Layout>
     <Header>

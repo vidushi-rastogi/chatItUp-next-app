@@ -29,7 +29,7 @@ export default function Home() {
       }
       storeUserDetails();
     }
-  }, [status])
+  }, [status, session])
 
   const optionSelected = (option) => {
     setLoginOption(option)
