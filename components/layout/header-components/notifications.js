@@ -1,69 +1,136 @@
 import React, { useState, useEffect } from "react";
-import { Row, Col, Dropdown, Badge, Button, Avatar, List } from 'antd';
+import { Row, Col, Dropdown, Badge, Button, Avatar, List, Tooltip } from 'antd';
 import {
-    BellFilled
+    BellFilled,
+    CheckOutlined,
+    CloseOutlined,
 } from '@ant-design/icons';
+import { NotificationDateFormat } from "../../shared-components/formatDate";
+import NotificationDescription from "../../shared-components/notificationDescription";
+import { handleAcceptRequest, handleRemoveRequest } from "./actionHandlers";
 import styles from '../layout.module.css';
 
-const getNotificationBody = list => {
-    return list.length > 0 ?
-    <List
-      size="small"
-      itemLayout="horizontal"
-      dataSource={list}
-      renderItem={item => (
-        <List.Item>
-          <Row justify='center'>
-            <div>
-              <Avatar icon={getIcon(item.icon)}/>
+const NotificationBody = ({
+  notifications,
+  setNotifications,
+  userNotifications,
+  setUserNotifications,
+  session,
+  chatPartners,
+  setChatPartners
+}) => {
+  return notifications.length > 0 ?
+  <List
+    size="small"
+    itemLayout="horizontal"
+    dataSource={notifications}
+    renderItem={item => (
+      <List.Item className="cursor-pointer hover:bg-gray-50">
+        <div className="flex content-evenly">
+          <div className="mr-2">
+            <Avatar icon={<BellFilled />} />
+          </div>
+          <div className="mr-3 flex flex-col">
+            <span className="font-bold">@{item.sender} </span>
+            <span className="text-xs"><NotificationDescription type='incoming' notificationType={item.type} /></span>
+          </div>
+          <div>
+            <div className="flex">              
+              {item.type === 'chat_request' &&               
+              <Tooltip title='Accept'>
+                <Button
+                size="small"
+                shape='circle'
+                icon={<CheckOutlined />}
+                onClick={() => handleAcceptRequest(
+                  item,
+                  session,
+                  setNotifications,
+                  setUserNotifications,
+                  userNotifications,
+                  chatPartners,
+                  setChatPartners
+                )}
+                />
+              </Tooltip>}
+              <Tooltip title={item.type === 'chat_request' ? 'Reject' : 'Remove'}>
+                <Button
+                  className="ml-2"
+                  size="small"
+                  danger 
+                  shape='circle'
+                  icon={<CloseOutlined />} 
+                  onClick={() => 
+                  handleRemoveRequest(
+                    item,
+                    session,
+                    setNotifications,
+                    setUserNotifications,
+                    userNotifications,
+                    item.type === 'chat_request' ? 'reject' : 'remove')}/>
+              </Tooltip>
             </div>
-            <div>
-              <span>{item.name}</span>
-              <span>{item.desc}</span>
-            </div>
-            <small>{item.time}</small>
-          </Row>
-        </List.Item>
-      )}
-    />
-    :
-    <div className="empty-notification">
-      <img src="https://gw.alipayobjects.com/zos/rmsportal/sAuJeJzSKbUmHfBQRzmZ.svg" alt="empty" />
-      <p className="mt-3">You have viewed all notifications</p>
-    </div>;
-  }
+            <small>{NotificationDateFormat(item.timestamp)}</small>
+          </div>
+        </div>
+      </List.Item>
+    )}
+  />
+  :
+  <div className="">
+    <img src="https://gw.alipayobjects.com/zos/rmsportal/sAuJeJzSKbUmHfBQRzmZ.svg" alt="empty" />
+    <p className="">You have viewed all notifications</p>
+  </div>;
+}
 
-const Notifications = ({ userNotifications, setUserNotifications }) => {
+const Notifications = ({
+  session,
+  userNotifications,
+  setUserNotifications,
+  chatPartners,
+  setChatPartners
+}) => {
     const [visible, setVisible] = useState(false);
     const [notifications, setNotifications] = useState([]);
 
     useEffect(() => {
-        setNotifications(userNotifications?.incomingNotifications)
+        if (userNotifications?.incomingNotifications) {
+          let n = userNotifications?.incomingNotifications?.slice(0, 5);
+          setNotifications(userNotifications?.incomingNotifications?.slice(0, 5));
+        }
     }, [userNotifications])
 
-    const notificationsList = (
-        <div>
-            <Row justify='space-between'>
-                <h4>Notification</h4>
-                <Button type="text" onClick={() => setNotifications([])} size="small">Clear</Button>
-            </Row>
-            {/* <div>
-                {getNotificationBody(notifications)}
-            </div> */}
-            {/* {
-                notifications.length > 0 ?
-                    <div>
-                        <a>View all</a>
-                    </div>
-                    :
-                    null
-            } */}
+    const notificationList = (
+      <div className="bg-white p-2 rounded">
+        <div className="text-center">
+          <h4>Notification</h4>
         </div>
+        <div className="m-0 p-0">
+          <NotificationBody 
+            notifications={notifications}
+            setNotifications={setNotifications}
+            userNotifications={userNotifications}
+            setUserNotifications={setUserNotifications}
+            session={session}
+            chatPartners={chatPartners}
+            setChatPartners={setChatPartners}
+          />
+        </div>
+        {
+          notifications.length > 0 ? 
+          <div className="text-center">
+            <a className="mt-2" onClick={() => window.location.href = '/notifications'}>View all</a>
+          </div>
+          :
+          null
+        }
+      </div>
     );
+
     return (
         <Dropdown
             placement="bottomRight"
-            overlay={notificationsList}
+            overlay={notificationList}
             onVisibleChange={(flag) => setVisible(flag)}
             visible={visible}
             trigger={['click']}
