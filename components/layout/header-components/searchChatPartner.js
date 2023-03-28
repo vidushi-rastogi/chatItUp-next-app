@@ -96,7 +96,7 @@ export default function SearchChatPartner({ session, chatPartners, userNotificat
     }
   }
 
-  const handleSelectedUser = (value) => {
+  const handleSelectedUser = () => {
     setSearchedValue('');
   }
 
@@ -109,7 +109,7 @@ export default function SearchChatPartner({ session, chatPartners, userNotificat
       value={searchedValue}
     >
       {searchedUsers.map(user =>
-        <Option value={user.username}>
+        <Option key={user.username} value={user.username}>
           <Row justify='space-between'>
             <Col>{user.username}</Col>
             <Col>

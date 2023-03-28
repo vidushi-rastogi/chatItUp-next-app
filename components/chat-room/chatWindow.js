@@ -23,7 +23,7 @@ export default function ChatLog({ userChats, session, currentActiveChat }) {
     const initialChatWindow = (
         <>
             <p>Welcome to your chat room.</p>
-            <p>Let's ChatItUp! <SmileOutlined /></p>
+            <p>Let&apos;s ChatItUp! <SmileOutlined /></p>
         </>
     )
 
@@ -33,7 +33,7 @@ export default function ChatLog({ userChats, session, currentActiveChat }) {
         height: '75vh'
     }}>
         {activeChat ? activeChat.chats.map(chatLog =>
-            <Row className={chatLog.username === session.user.username ? styles.chatUserSide : styles.chatOtherSide}>
+            <Row key={chatLog.username} className={chatLog.username === session.user.username ? styles.chatUserSide : styles.chatOtherSide}>
                 <Col className={chatLog.username === session.user.username ? styles.chatUserBubble : styles.chatOtherBubble}>
                     <p style={{ margin: '0', padding: '0' }}>{chatLog.content}</p>
                     <div style={{ textAlign: 'end', paddingTop: '3px' }}>

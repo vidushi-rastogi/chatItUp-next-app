@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { Row, Col, Dropdown, Badge, Button, Avatar, List, Tooltip } from 'antd';
+import { Dropdown, Badge, Button, Avatar, List, Tooltip } from 'antd';
 import {
     BellFilled,
     CheckOutlined,
     CloseOutlined,
+    ExclamationCircleOutlined
 } from '@ant-design/icons';
 import { NotificationDateFormat } from "../../shared-components/formatDate";
 import NotificationDescription from "../../shared-components/notificationDescription";
@@ -77,9 +78,11 @@ const NotificationBody = ({
     )}
   />
   :
-  <div className="">
-    <img src="https://gw.alipayobjects.com/zos/rmsportal/sAuJeJzSKbUmHfBQRzmZ.svg" alt="empty" />
-    <p className="">You have viewed all notifications</p>
+  <div>
+    <div className="text-center">
+      <ExclamationCircleOutlined className="text-5xl text-blue-500"/>
+    </div>
+    <p>You have viewed all notifications</p>
   </div>;
 }
 

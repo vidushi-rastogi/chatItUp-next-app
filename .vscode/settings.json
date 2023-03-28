@@ -1,0 +1,8 @@
+{
+    "appService.zipIgnorePattern": [
+        "node_modules{,/**}",
+        ".vscode{,/**}"
+    ],
+    "appService.defaultWebAppToDeploy": "/subscriptions/e0929729-7758-408c-8830-c52a08f73b4c/resourceGroups/chat-it-up/providers/Microsoft.Web/sites/Chat-it-up",
+    "appService.deploySubpath": "."
+}

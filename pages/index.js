@@ -18,7 +18,7 @@ export default function Home() {
     if (status === 'authenticated') {
       window.location.href = '/chat';
     }
-  }, [status])
+  }, [status, session])
 
   const optionSelected = (option) => {
     setLoginOption(option)

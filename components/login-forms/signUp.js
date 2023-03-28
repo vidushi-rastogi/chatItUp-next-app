@@ -44,7 +44,7 @@ export default function SignUp() {
   }
 
   return <Card bordered={false} className={styles.loginForm}>
-    <h4>Let's get started!</h4>
+    <h4>Let&apos;s get started!</h4>
     <Form
       name="basic"
       initialValues={{ remember: true }}

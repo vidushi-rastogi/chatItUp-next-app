@@ -61,7 +61,7 @@ export default function Chat({ chatNotifications }) {
         getUserChats();
       }
     }
-  }, [status, flag])
+  }, [status, flag, session])
 
   return status === 'authenticated' ? <Layout>
     <Header>

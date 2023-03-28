@@ -19,19 +19,19 @@ export default function Notifications() {
         setType(key)
     }
 
-    const appendData = async () => {
-        if (session) {
-            await fetch(`/api/getAllNotifications?username=${session.user.username}`)
-                .then(async (res) => await res.json())
-                .then((body) => {
-                    setInNotifications(body.notifications.incomingNotifications);
-                    setOutNotifications(body.notifications.outgoingNotifications);
-                });
-        }
-    };
     useEffect(() => {
-        appendData();
-    }, [status, flag]);
+        const getNotifications = async () => {
+            if (session) {
+                await fetch(`/api/getAllNotifications?username=${session.user.username}`)
+                    .then(async (res) => await res.json())
+                    .then((body) => {
+                        setInNotifications(body.notifications.incomingNotifications);
+                        setOutNotifications(body.notifications.outgoingNotifications);
+                    });
+            }
+        };
+        getNotifications();
+    }, [status, flag, session]);
 
     return (status === 'authenticated' ?
         <Layout>
