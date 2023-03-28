@@ -1,37 +1,17 @@
-import React, { useEffect, useState } from 'react';
-import { Avatar, Button, List, message, Row, Col, Tooltip } from 'antd';
+import React, { useState } from 'react';
+import { Avatar, List } from 'antd';
 import VirtualList from 'rc-virtual-list';
 import {
     UserOutlined,
 } from '@ant-design/icons';
 import ActionButtons from './actionButtons';
+import NotificationDescription from '../shared-components/notificationDescription';
+import { NotificationDateFormat } from '../shared-components/formatDate';
 
-const NotificationDate = (date) => {
-    let d = new Date(date.date);
-    const month = d.getMonth() + 1 > 9 ? `${d.getMonth() + 1}` : `0${d.getMonth() + 1}`
-    const dateTime = `${d.getDate()}-${month}-${d.getFullYear()} ${d.getHours()}:${d.getMinutes()}:${d.getSeconds()}`
-    return <p style={{
-        margin: '0',
-        padding: '0',
-        color: 'rgb(157, 157, 157)'
-    }}>
-        {dateTime}
-    </p>
-}
-
-const NotificationDescription = ({ type, notificationType, timestamp }) => (
+const Description = ({ type, notificationType, timestamp }) => (
     <>
-        {notificationType === 'chat_request' ?
-            type === 'incoming' ?
-                <p>Sent you a chat request</p>
-                :
-                <p>Received a chat request from you</p>
-            :
-            notificationType === 'request_accepted' ?
-                <p>Accepted your chat request</p>
-                :
-                <></>}
-        <NotificationDate date={timestamp}/>
+        <NotificationDescription type={type} notificationType={notificationType}/>
+        <p className='p-0 m-0 text-xs'>{NotificationDateFormat(timestamp)}</p>
     </>
 )
 
@@ -49,14 +29,13 @@ export default function NotificationsPage({ type, notifications, session }) {
             }
         }
     };
-    // useEffect(() => {
-    //     appendData();
-    // }, []);
+
     const onScroll = (e) => {
         if (e.currentTarget.scrollHeight - e.currentTarget.scrollTop === 350) {
             appendData();
         }
     };
+
     return (
         <List>
             <VirtualList
@@ -73,7 +52,7 @@ export default function NotificationsPage({ type, notifications, session }) {
                             {<Avatar
                                 //src={item.picture.large} 
                                 icon={<UserOutlined />} />}
-                            description={<NotificationDescription type={type} notificationType={item.type} timestamp={item.timestamp}/>}
+                            description={<Description type={type} notificationType={item.type} timestamp={item.timestamp}/>}
                             title={type === 'incoming' ? <p>{item.sender}</p> : <p>{item.receiver}</p>}
                         />
                         <ActionButtons 
