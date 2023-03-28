@@ -56,17 +56,30 @@ const ActionButtons = ({ type, notification, session, setData }) => {
         }
     }
 
-    const handleRemoveRequest = async () => {
-        const notificationType = 'incomingNotifications';
-        const removedRequestResponse = await RemoveNotification(session.user.username, notificationType, notification._id);
-        const data = await removedRequestResponse.json();
-        if (removedRequestResponse.status === 200) {
-            setData(data.updatedNotifications.slice(0, 5));
-            popNotification('success', `Notitification is removed`);
+    const handleRemoveRequest = async (removeType) => {
+        if (removeType === 'remove') {
+            const notificationType = 'incomingNotifications';
+            const removedRequestResponse = await RemoveNotification(session.user.username, notificationType, notification._id);
+            const data = await removedRequestResponse.json();
+            if (removedRequestResponse.status === 200) {
+                setData(data.updatedNotifications.slice(0, 5));
+                popNotification('success', `Notitification is removed`);
+            }
+            else {
+                console.log(`Error: Unable to remove notification for ${session.user.username}`);
+                popNotification('error', `Unable to remove the notification :(`);
+            }
         }
         else {
-            console.log(`Error: Unable to remove notification for ${session.user.username}`);
-            popNotification('error', `Unable to remove the notification :(`);
+            const rejectedRequestResponse = await RemoveChatRequest(session.user.username, notification.sender, 'accept', notification._id);
+            const data = await rejectedRequestResponse.json();
+            if (rejectedRequestResponse.status === 200) {
+                setData(data.updatedNotifications.slice(0, 5));
+            }
+            else {
+                console.log(`Error: Unable to remove chat request from ${session.user.username} and ${notification.sender}`);
+                popNotification('error', `Unable to reject chat request from ${notification.sender} :(`);
+            }
         }
     }
 
@@ -108,7 +121,7 @@ const ActionButtons = ({ type, notification, session, setData }) => {
                             <Button 
                                 danger 
                                 shape='circle'
-                                onClick={handleRemoveRequest}
+                                onClick={() => handleRemoveRequest(notification.type === 'chat_request' ? 'reject' : 'remove')}
                                 icon={<CloseOutlined />} />
                         </Tooltip>
                     </Col>

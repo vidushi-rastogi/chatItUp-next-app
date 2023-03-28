@@ -1,10 +1,11 @@
-import { Layout, Result } from 'antd';
+import { Layout, Result, FloatButton } from 'antd';
 import { useSession } from 'next-auth/react';
 import { ChatNotifications } from '../db/sampleChatNotifications';
 import PageHeader from '../components/layout/header';
 import PageSider from '../components/chat-room/sider';
 import ChatLog from '../components/chat-room/chatWindow';
 import ChatInput from '../components/chat-room/chatInput';
+import Refresh from '../components/shared-components/refresh';
 import { useEffect, useState } from 'react';
 
 const { Header, Sider, Content } = Layout;
@@ -22,12 +23,23 @@ export default function Chat({ chatNotifications }) {
   const [chatPartners, setChatPartners] = useState([]);
   const [userChats, setUserChats] = useState([]);
   const [userNotifications, setUserNotifications] = useState({});
+  const [flag, setFlag] = useState(false);
   const { data: session, status } = useSession();
+
   useEffect(() => {
     if (status === 'authenticated') {
-      const currentUserDetails = JSON.parse(localStorage.getItem('userDetails'))
-      setChatPartners(currentUserDetails.chatPartners);
       if (session) {
+        const storeUserDetails = async () => {
+          await fetch(`/api/getUserDetails?username=${session.user.username}`, {
+            method: 'GET'
+          })
+          .then(async (res) => {
+            const userDetailsResponse = await res.json();
+            localStorage.setItem('userDetails', JSON.stringify(userDetailsResponse.user));
+            setChatPartners(userDetailsResponse.user.chatPartners);
+          })
+          .catch(error => console.log('ERROR: While retrieving user details : ', error))
+        }
         const getUserChats = async () => {
           await fetch(`/api/getUserChats?username=${session.user.username}`, {
             method: 'GET'
@@ -45,10 +57,11 @@ export default function Chat({ chatNotifications }) {
               })
             })
         }
+        storeUserDetails();
         getUserChats();
       }
     }
-  }, [status])
+  }, [status, flag])
 
   return status === 'authenticated' ? <Layout>
     <Header>
@@ -62,6 +75,7 @@ export default function Chat({ chatNotifications }) {
     </Header>
     <Layout>
       <Content style={{ maxWidth: '75%', maxHeight: '500px' }}>
+        <FloatButton icon={<Refresh flag={flag} setFlag={setFlag} />}/>
         <ChatLog
           userChats={userChats}
           session={session}

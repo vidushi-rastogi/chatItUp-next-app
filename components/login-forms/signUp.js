@@ -34,6 +34,7 @@ export default function SignUp() {
         popNotification('error', response.error);
       }
       else {
+        window.location.href = '/chat';
         popNotification('success', null);
       }
     }

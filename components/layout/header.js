@@ -16,6 +16,7 @@ export default function PageHeader({
     notification,
     session,
     chatPartners,
+    setChatPartners,
     userNotifications,
     setUserNotifications
 }) {
@@ -92,9 +93,12 @@ export default function PageHeader({
                                     >
                                         <BellFilled className={styles.headerIcons} />
                                     </Popover> */}
-                                    <NavNotification 
+                                    <NavNotification
+                                        session={session}
                                         userNotifications={userNotifications}
-                                        setUserNotifications={setUserNotifications}/>
+                                        setUserNotifications={setUserNotifications}
+                                        chatPartners={chatPartners}
+                                        setChatPartners={setChatPartners}/>
                                 </Col>
                                 :
                                 <Col span={12}></Col>}

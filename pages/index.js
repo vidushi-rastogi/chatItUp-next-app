@@ -16,18 +16,7 @@ export default function Home() {
 
   useEffect(() => {
     if (status === 'authenticated') {
-      const storeUserDetails = async () => {
-        await fetch(`/api/getUserDetails?username=${session.user.username}`, {
-          method: 'GET'
-        })
-        .then(async (res) => {
-          const userDetailsResponse = await res.json();
-          localStorage.setItem('userDetails', JSON.stringify(userDetailsResponse.user));
-          window.location.href = '/chat';
-        })
-        .catch(error => console.log('ERROR: While retrieving user details : ', error))
-      }
-      storeUserDetails();
+      window.location.href = '/chat';
     }
   }, [status])
 
