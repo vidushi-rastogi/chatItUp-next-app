@@ -1,4 +1,4 @@
-import connect from "../../../lib/mongodb";
+import connect from '../../../lib/mongodb';
 import User from '../../../model/userSchema';
 
 export default async function handler(req, res) {

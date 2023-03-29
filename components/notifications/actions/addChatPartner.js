@@ -1,5 +1,5 @@
 export const AddChatPartner = async (currentUser, notification) => {
-    const res = await fetch('/api/addChatPartner', {
+    return await fetch('/api/addChatPartner', {
         method: 'POST',
         body: JSON.stringify({
             chatId: `${currentUser.username}_${notification.sender}`,
@@ -10,5 +10,4 @@ export const AddChatPartner = async (currentUser, notification) => {
             'Content-Type': 'application/json'
         }
     });
-    return res
 }

@@ -105,7 +105,7 @@ export default function SearchChatPartner({ session, chatPartners, userNotificat
       showSearch
       onSearch={searchUser}
       onSelect={handleSelectedUser}
-      style={{ width: "100%" }}
+      style={{ width: '100%' }}
       value={searchedValue}
     >
       {searchedUsers.map(user =>

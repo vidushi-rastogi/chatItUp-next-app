@@ -57,7 +57,7 @@ export default function PageHeader({
                     </Row>
                 )}
             </div>
-            <Modal title="Confirm Log Out"
+            <Modal title='Confirm Log Out'
                 open={showLogOutModal}
                 onOk={handleLogOut}
                 onCancel={handleCancelLogOut}
@@ -86,13 +86,6 @@ export default function PageHeader({
                         <Row>
                             {!notification ?
                                 <Col span={12}>
-                                    {/* <Popover
-                                        content={<Notifications chatNotifications={chatNotifications}/>}
-                                        title="Chat Requests"
-                                        trigger="click"
-                                    >
-                                        <BellFilled className={styles.headerIcons} />
-                                    </Popover> */}
                                     <NavNotification
                                         session={session}
                                         userNotifications={userNotifications}
@@ -105,8 +98,8 @@ export default function PageHeader({
                             <Col span={12}>
                                 <Popover
                                     content={settingOptions}
-                                    title="Settings"
-                                    trigger="click"
+                                    title='Settings'
+                                    trigger='click'
                                 >
                                     <SettingFilled className={styles.headerIcons} />
                                 </Popover>

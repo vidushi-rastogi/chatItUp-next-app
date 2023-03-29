@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 import { SyncOutlined } from '@ant-design/icons';
 import { Tooltip } from 'antd';
 import styles from './shared-components.module.css';

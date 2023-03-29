@@ -1,5 +1,5 @@
-import connect from "../../lib/mongodb";
-import Chat from "../../model/chatSchema";
+import connect from '../../lib/mongodb';
+import Chat from '../../model/chatSchema';
 
 export default async function handler(req, res) {
     const newChat = JSON.parse(req.body);

@@ -1,5 +1,5 @@
-import connect from "../../lib/mongodb";
-import Notification from "../../model/notificationSchema";
+import connect from '../../lib/mongodb';
+import Notification from '../../model/notificationSchema';
 
 export default async function handler(req, res) {
     const requestData = JSON.parse(req.body);

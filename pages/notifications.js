@@ -40,11 +40,11 @@ export default function Notifications() {
                     notification
                     session={session} />
             </Header>
-            <div style={{ padding: '0px 10px 0px 10px' }}>
+            <div className='pt-0 pr-3 pb-0 pl-3'>
 
                 <div style={{ textAlign: 'center' }}><h1>Notifications</h1></div>
                 <Card>
-                    <Row justify='space-between' style={{marginBottom: '20px'}}>
+                    <Row justify='space-between' style={{ marginBottom: '20px' }}>
                         <BackToHome />
                         <Refresh flag={flag} setFlag={setFlag} />
                     </Row>
@@ -55,7 +55,7 @@ export default function Notifications() {
                             {
                                 label: 'Received',
                                 key: 'Incoming',
-                                children: type === 'Incoming' && <NotificationsPage type='incoming' notifications={inNotifications} session={session}/>
+                                children: type === 'Incoming' && <NotificationsPage type='incoming' notifications={inNotifications} session={session} />
                             },
                             {
                                 label: 'Sent',
@@ -69,9 +69,9 @@ export default function Notifications() {
         </Layout>
         :
         <Result
-            status="403"
-            title="403"
-            subTitle="Sorry, you are not authorized to access this page."
+            status='403'
+            title='403'
+            subTitle='Sorry, you are not authorized to access this page.'
         />
     );
 }

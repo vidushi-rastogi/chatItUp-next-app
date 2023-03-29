@@ -1,5 +1,5 @@
 export const RequestAcceptionNotification = async (currentUser, notification) => {
-    const res = await fetch('/api/postNotification', {
+    return await fetch('/api/postNotification', {
         method: 'POST',
         body: JSON.stringify({
           fromUser: currentUser.username,
@@ -12,5 +12,4 @@ export const RequestAcceptionNotification = async (currentUser, notification) =>
           'Content-Type': 'application/json'
         }
       })
-    return res;
 }

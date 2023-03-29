@@ -42,7 +42,7 @@ export default function NotificationsPage({ type, notifications, session }) {
                 data={data}
                 height={350}
                 itemHeight={47}
-                itemKey={"_id"}
+                itemKey={'_id'}
                 onScroll={onScroll}
             >
                 {(item) => (

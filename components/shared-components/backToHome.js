@@ -1,5 +1,5 @@
-import React from "react";
-import { Tooltip } from "antd";
+import React from 'react';
+import { Tooltip } from 'antd';
 import { ArrowLeftOutlined } from '@ant-design/icons';
 import styles from './shared-components.module.css';
 

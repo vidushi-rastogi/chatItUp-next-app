@@ -1,5 +1,5 @@
 export const RemoveNotification = async (username, notificationType, notificationId) => {
-    const res = await fetch('/api/deleteNotification', {
+    return await fetch('/api/deleteNotification', {
         method: 'POST',
         body: JSON.stringify({
             username,
@@ -10,5 +10,4 @@ export const RemoveNotification = async (username, notificationType, notificatio
             'Content-Type': 'application/json'
         }
     })
-    return res;
 }

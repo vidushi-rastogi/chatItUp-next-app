@@ -63,11 +63,11 @@ const ActionButtons = ({ type, notification, session, setData }) => {
             const data = await removedRequestResponse.json();
             if (removedRequestResponse.status === 200) {
                 setData(data.updatedNotifications.slice(0, 5));
-                popNotification('success', `Notitification is removed`);
+                popNotification('success', 'Notitification is removed');
             }
             else {
                 console.log(`Error: Unable to remove notification for ${session.user.username}`);
-                popNotification('error', `Unable to remove the notification :(`);
+                popNotification('error', 'Unable to remove the notification :(');
             }
         }
         else {

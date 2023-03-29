@@ -81,7 +81,7 @@ const handleRemoveRequest = async (
         }
         else {
             console.log(`Error: Unable to remove notification for ${session.user.username}`);
-            popNotification('error', `Unable to remove the notification :(`);
+            popNotification('error', 'Unable to remove the notification :(');
         }
     }
     else {
