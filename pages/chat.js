@@ -1,6 +1,5 @@
 import { Layout, Result, FloatButton } from 'antd';
 import { useSession } from 'next-auth/react';
-import { ChatNotifications } from '../db/sampleChatNotifications';
 import PageHeader from '../components/layout/header';
 import PageSider from '../components/chat-room/sider';
 import ChatLog from '../components/chat-room/chatWindow';
@@ -10,15 +9,7 @@ import { useEffect, useState } from 'react';
 
 const { Header, Sider, Content } = Layout;
 
-export const getStaticProps = async () => {
-  return {
-    props: {
-      chatNotifications: ChatNotifications,
-    }
-  }
-}
-
-export default function Chat({ chatNotifications }) {
+export default function Chat() {
   const [currentActiveChat, setCurrentActiveChat] = useState('');
   const [chatPartners, setChatPartners] = useState([]);
   const [userChats, setUserChats] = useState([]);
@@ -66,7 +57,6 @@ export default function Chat({ chatNotifications }) {
   return status === 'authenticated' ? <Layout>
     <Header>
       <PageHeader
-        chatNotifications={chatNotifications}
         session={session}
         chatPartners={chatPartners}
         setChatPartners={setChatPartners}
@@ -99,8 +89,8 @@ export default function Chat({ chatNotifications }) {
   </Layout>
     :
     <Result
-      status="403"
-      title="403"
-      subTitle="Sorry, you are not authorized to access this page."
+      status='403'
+      title='403'
+      subTitle='Sorry, you are not authorized to access this page.'
     />
 }

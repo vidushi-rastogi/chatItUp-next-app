@@ -83,7 +83,7 @@ export default function ChatInput({
                             value={message}
                             addonBefore={emoticonsSelect}
                             addonAfter={attachAndSendOptions}
-                            placeholder="Enter your message here..." />
+                            placeholder='Enter your message here...' />
                     </Card>
                 </Col>
             </Row>

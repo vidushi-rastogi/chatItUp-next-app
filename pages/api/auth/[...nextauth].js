@@ -1,11 +1,11 @@
-import NextAuth from "next-auth/next";
-import CredentialsProvider from "next-auth/providers/credentials";
-import connect from "../../../lib/mongodb";
-import User from "../../../model/userSchema";
+import NextAuth from 'next-auth/next';
+import CredentialsProvider from 'next-auth/providers/credentials';
+import connect from '../../../lib/mongodb';
+import User from '../../../model/userSchema';
 
 const authOptions = {
     session: {
-        strategy: "jwt",
+        strategy: 'jwt',
     },
     providers: [
         CredentialsProvider({

@@ -1,5 +1,5 @@
 export const RemoveChatRequest = async (receiver, sender, type, notificationId) => {
-    const res = await fetch('/api/deleteChatRequest', {
+    return await fetch('/api/deleteChatRequest', {
         method: 'POST',
         body: JSON.stringify({
             receiver,
@@ -11,5 +11,4 @@ export const RemoveChatRequest = async (receiver, sender, type, notificationId) 
             'Content-Type': 'application/json'
         }
     })
-    return res;
 }
