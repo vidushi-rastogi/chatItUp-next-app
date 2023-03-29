@@ -34,6 +34,7 @@ export default function SignUp() {
         popNotification('error', response.error);
       }
       else {
+        window.location.href = '/chat';
         popNotification('success', null);
       }
     }
@@ -45,28 +46,28 @@ export default function SignUp() {
   return <Card bordered={false} className={styles.loginForm}>
     <h4>Let&apos;s get started!</h4>
     <Form
-      name="basic"
+      name='basic'
       initialValues={{ remember: true }}
       onFinish={handleSubmit}
     >
       <Form.Item
-        label="Username"
-        name="username"
+        label='Username'
+        name='username'
         rules={[{ required: true, message: 'Please input your username!' }]}
       >
         <Input />
       </Form.Item>
 
       <Form.Item
-        label="Password"
-        name="password"
+        label='Password'
+        name='password'
         rules={[{ required: true, message: 'Please input your password!' }]}
       >
         <Input.Password />
       </Form.Item>
 
       <Form.Item>
-        <Button type="primary" htmlType="submit">
+        <Button type='primary' htmlType='submit'>
           Sign Up
         </Button>
       </Form.Item>

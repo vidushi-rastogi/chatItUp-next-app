@@ -6,23 +6,20 @@ import {
 import styles from './layout.module.css';
 import { useState } from 'react';
 import { signOut } from 'next-auth/react';
-import SearchChatPartner from './searchChatPartner';
+import SearchChatPartner from './header-components/searchChatPartner';
+import NavNotification from './header-components/notifications';
 
 const settings = ['Profile Settings', 'Privacy Settings', 'Log Out'];
 
-const notifications = (chatNotifications) => (
-    <div className={styles.notificationsDiv}>
-        {chatNotifications.map(notification => (
-            <Row key={notification.time} className={styles.headerOptionRow}>
-                <Col span={16}>{notification.notification}</Col>
-                <Col span={8} style={{ textAlign: 'end' }}>{notification.time}</Col>
-            </Row>
-        ))}
-    </div>
-)
-
-
-export default function PageHeader({ home, chatNotifications, session, chatPartners, setChatPartners }) {
+export default function PageHeader({
+    home,
+    notification,
+    session,
+    chatPartners,
+    setChatPartners,
+    userNotifications,
+    setUserNotifications
+}) {
     const [selectedSettingOption, setSelectedSettingOption] = useState('');
     const [showLogOutModal, setShowLogOutModal] = useState(false);
 
@@ -60,7 +57,7 @@ export default function PageHeader({ home, chatNotifications, session, chatPartn
                     </Row>
                 )}
             </div>
-            <Modal title="Confirm Log Out"
+            <Modal title='Confirm Log Out'
                 open={showLogOutModal}
                 onOk={handleLogOut}
                 onCancel={handleCancelLogOut}
@@ -71,36 +68,38 @@ export default function PageHeader({ home, chatNotifications, session, chatPartn
         </>
     )
 
-
     return <div>
         <Row justify='space-between'>
             <Col span={3} className={styles.header}>
                 <h1>ChatItUp!</h1>
             </Col>
-            {!home ? <Col span={6}>
-                        <SearchChatPartner 
-                            session={session} 
-                            chatPartners={chatPartners}
-                            setChatPartners={setChatPartners}/>
-                    </Col> : <></>}
+            {!home && !notification ? <Col span={6}>
+                <SearchChatPartner
+                    session={session}
+                    chatPartners={chatPartners}
+                    userNotifications={userNotifications}
+                    setUserNotifications={setUserNotifications}/>
+            </Col> : <></>}
             {!home ?
                 <>
                     <Col span={2}>
                         <Row>
-                            <Col span={12}>
-                                <Popover
-                                    content={notifications(chatNotifications)}
-                                    title="Chat Requests"
-                                    trigger="click"
-                                >
-                                    <BellFilled className={styles.headerIcons} />
-                                </Popover>
-                            </Col>
+                            {!notification ?
+                                <Col span={12}>
+                                    <NavNotification
+                                        session={session}
+                                        userNotifications={userNotifications}
+                                        setUserNotifications={setUserNotifications}
+                                        chatPartners={chatPartners}
+                                        setChatPartners={setChatPartners}/>
+                                </Col>
+                                :
+                                <Col span={12}></Col>}
                             <Col span={12}>
                                 <Popover
                                     content={settingOptions}
-                                    title="Settings"
-                                    trigger="click"
+                                    title='Settings'
+                                    trigger='click'
                                 >
                                     <SettingFilled className={styles.headerIcons} />
                                 </Popover>
