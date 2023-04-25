@@ -28,6 +28,9 @@ export default function PageHeader({
         if (option === 'Log Out') {
             setShowLogOutModal(true);
         }
+        else if (option === 'Profile Settings') {
+            window.location.href = `/profile?user=${session.user.username}`;
+        }
         else {
             window.location.href = '/';
         }

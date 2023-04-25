@@ -3,6 +3,7 @@ import {
     MehTwoTone
 } from '@ant-design/icons';
 import styles from './chat.module.css';
+import Link from 'next/link';
 
 export default function PageSider({ setCurrentActiveChat, chatPartners}) {
 
@@ -14,7 +15,7 @@ export default function PageSider({ setCurrentActiveChat, chatPartners}) {
         <Card>
             <Row>
                 <Col span={24}>
-                    <h3 style={{marginTop:'0'}}>Your Chats</h3>
+                    <h3 className='mt-0'>Your Chats</h3>
                 </Col>
             </Row>
             {chatPartners.map(partner => (
@@ -27,7 +28,9 @@ export default function PageSider({ setCurrentActiveChat, chatPartners}) {
                     <MehTwoTone className={styles.chatUserPhoto}/>
                 </Col>
                 <Col span={20}>
-                    <h4 className={styles.chatUserName}>@{partner}</h4>
+                    <h4 className={styles.chatUserName}>
+                        <Link href={`/profile?user=${partner}`}>@{partner}</Link>
+                    </h4>
                 </Col>
             </Row>
             ))}
