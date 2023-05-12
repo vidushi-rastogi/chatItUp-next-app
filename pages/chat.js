@@ -75,7 +75,6 @@ export default function Chat() {
           <ChatInput
             session={session}
             currentActiveChat={currentActiveChat}
-            userChats={userChats}
             setUserChats={setUserChats} />
           : <></>}
       </Content>

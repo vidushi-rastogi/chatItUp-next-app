@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Card, Layout, Result } from 'antd';
 import PageHeader from '../components/layout/header';
 import ProfileInfo from "../components/profile/profileInfo";
@@ -11,6 +11,25 @@ const { Header } = Layout;
 export default function Profile() {
     const { data: session, status } = useSession();
     const { query } = useRouter();
+    const [profileData, setProfileData] = useState({});
+
+    useEffect(() => {
+        if (status === 'authenticated') {
+            if (query.user) {
+                const getUserDetails = async () => {
+                    await fetch(`/api/getUserDetails?username=${query.user}`, {
+                      method: 'GET'
+                    })
+                    .then(async (res) => {
+                      const userDetailsResponse = await res.json();
+                      setProfileData(userDetailsResponse.user);
+                    })
+                    .catch(error => console.log('ERROR: While retrieving profile details : ', error))
+                }
+                getUserDetails();
+            }
+        }
+    }, [status, query])
 
     return (status === 'authenticated' ?
         <>
@@ -28,7 +47,8 @@ export default function Profile() {
                             <div className="container my-4 h-screen">
                                 <ProfileInfo
                                     session={session}
-                                    profileUser={query.user} />
+                                    profileUser={query.user}
+                                    profileData={profileData}/>
                             </div>
                         </Card>
                     </div>

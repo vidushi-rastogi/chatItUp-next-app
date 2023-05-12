@@ -15,7 +15,6 @@ const popNotification = (type, message) => {
 export default function ChatInput({
     session,
     currentActiveChat,
-    userChats,
     setUserChats,
 }) {
     const [message, setMessage] = useState('');

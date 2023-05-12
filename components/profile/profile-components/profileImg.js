@@ -1,7 +1,7 @@
 import { PlusOutlined, LoadingOutlined } from '@ant-design/icons';
 import { Upload, message } from 'antd';
 import { useState } from 'react';
-import ImageCropper from './imageCropper';
+import ImgCrop from 'antd-img-crop';
 
 const getBase64 = (img, callback) => {
   const reader = new FileReader();
@@ -20,11 +20,9 @@ const beforeUpload = (file) => {
   return isJpgOrPng && isLt2M;
 };
 
-const ProfileImage = () => {
+const ProfileImage = ({ currentUser, profileUser }) => {
   const [loading, setLoading] = useState(false);
   const [imageUrl, setImageUrl] = useState();
-  const [image, setImage] = useState();
-  const [openCropModal, setOpenCropModal] = useState(false);
 
   const handleChange = (info) => {
     if (info.file.status === 'uploading') {
@@ -35,60 +33,38 @@ const ProfileImage = () => {
       // Get this url from response in real world.
       getBase64(info.file.originFileObj, (url) => {
         setLoading(false);
-        setImage(url);
-        setOpenCropModal(true);
-        // setImageUrl(url);
+        setImageUrl(url);
       });
     }
   };
+
+  const onPreview = async (file) => {
+    let src = file.url;
+    if (!src) {
+      src = await new Promise((resolve) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file.originFileObj);
+        reader.onload = () => resolve(reader.result);
+      });
+    }
+    const image = new Image();
+    image.src = src;
+    const imgWindow = window.open(src);
+    imgWindow?.document.write(image.outerHTML);
+  };
+
   const uploadButton = (
     <div>
       {loading ? <LoadingOutlined /> : <PlusOutlined />}
-      <div
-        style={{
-          marginTop: 8,
-        }}
-      >
+      <div className='mt-3'>
         Upload
       </div>
     </div>
   );
-
-  const onCropDone = (imgCroppedArea) => {
-    const canvasEle = document.createElement("canvas");
-    canvasEle.width = imgCroppedArea.width;
-    canvasEle.height = imgCroppedArea.height;
-
-    const context = canvasEle.getContext("2d");
-
-    let imageObj1 = new Image();
-    imageObj1.src = image;
-    imageObj1.onload = function () {
-      context.drawImage(
-        imageObj1,
-        imgCroppedArea.x,
-        imgCroppedArea.y,
-        imgCroppedArea.width,
-        imgCroppedArea.height,
-        0,
-        0,
-        imgCroppedArea.width,
-        imgCroppedArea.height
-      );
-      const dataURL = canvasEle.toDataURL("image/jpeg");
-      setImageUrl(dataURL);
-      setOpenCropModal(false);
-    };
-  };
-
-  // Handle Cancel Button Click
-  const onCropCancel = () => {
-    setImage(null);
-    setOpenCropModal(false);
-  };
-
+  
   return (
-    <>
+    currentUser === profileUser ? 
+      <ImgCrop rotationSlider>
       <Upload
         name="avatar"
         listType="picture-card"
@@ -96,29 +72,26 @@ const ProfileImage = () => {
         showUploadList={false}
         beforeUpload={beforeUpload}
         onChange={handleChange}
+        onPreview={onPreview}
+
       >
         {imageUrl ? (
           <img
             src={imageUrl}
             alt="avatar"
-            style={{
-              width: '100%',
-            }}
+            className='w-full'
           />
         ) : (
           uploadButton
         )}
       </Upload>
-      {openCropModal ?
-        <ImageCropper
-          image={image}
-          openModal={openCropModal}
-          onCropDone={onCropDone}
-          onCropCancel={onCropCancel}
-        />
-        :
-        <></>}
-    </>
+    </ImgCrop>
+    :
+    <img
+      src={imageUrl}
+      alt="avatar"
+      className='w-full'
+    />
   );
 };
 
