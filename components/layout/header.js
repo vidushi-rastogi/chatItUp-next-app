@@ -20,11 +20,9 @@ export default function PageHeader({
     userNotifications,
     setUserNotifications
 }) {
-    const [selectedSettingOption, setSelectedSettingOption] = useState('');
     const [showLogOutModal, setShowLogOutModal] = useState(false);
 
     const handleSettingOptionClick = (option) => {
-        setSelectedSettingOption(option)
         if (option === 'Log Out') {
             setShowLogOutModal(true);
         }

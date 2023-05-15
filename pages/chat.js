@@ -75,7 +75,6 @@ export default function Chat() {
           <ChatInput
             session={session}
             currentActiveChat={currentActiveChat}
-            userChats={userChats}
             setUserChats={setUserChats} />
           : <></>}
       </Content>
@@ -83,6 +82,7 @@ export default function Chat() {
         <PageSider
           setCurrentActiveChat={setCurrentActiveChat}
           chatPartners={chatPartners}
+          currentActiveChat={currentActiveChat}
         />
       </Sider>
     </Layout>
