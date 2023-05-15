@@ -80,9 +80,7 @@ export default function ChatInput({
         </Row>
     )
 
-    return <div style={{
-        // maxHeight: '10vh'
-    }}>
+    return <div>
         <Affix offsetBottom={0}>
             <Row>
                 <Col span={24}>

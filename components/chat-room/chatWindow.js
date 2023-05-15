@@ -30,7 +30,7 @@ export default function ChatLog({ userChats, session, currentActiveChat }) {
     return <div style={{
         padding: '20px',
         overflowY: 'auto',
-        height: '75vh'
+        height: '86.5vh'
     }}>
         {activeChat ? activeChat.chats.map(chatLog =>
             <Row key={chatLog.username} className={chatLog.username === session.user.username ? styles.chatUserSide : styles.chatOtherSide}>

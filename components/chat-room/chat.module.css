@@ -4,8 +4,7 @@
     padding: 10px;
     min-width: 300px;
     padding-bottom: 50px;
-    margin-bottom: 50px;
-    overflow-y: auto;
+    overflow-y: hidden;
 }
 .chatRow {
     border-bottom: 1px solid gray;
@@ -16,10 +15,10 @@
     background-color: aliceblue;
 }
 .chatUserName {
-    margin: 0;
+    margin-top: -20px;
 }
 .chatUserPhoto {
-    font-size: 25px;
+    font-size: 30px;
 }
 
 
