@@ -12,6 +12,8 @@ export default function Profile() {
     const { data: session, status } = useSession();
     const { query } = useRouter();
     const [profileData, setProfileData] = useState({});
+    const [sentToUsers, setSentToUsers] = useState([]);
+    const [receivedFromUsers, setReceivedFromUsers] = useState([]);
 
     useEffect(() => {
         if (status === 'authenticated') {
@@ -26,10 +28,33 @@ export default function Profile() {
                     })
                     .catch(error => console.log('ERROR: While retrieving profile details : ', error))
                 }
+                
                 getUserDetails();
             }
         }
     }, [status, query])
+
+    useEffect(() => {
+        if (status === 'authenticated') {
+            if (session) {
+                const getUserNotifications = async () => {
+                    await fetch(`/api/getAllNotifications?username=${session.user.username}`, {
+                        method: 'GET'
+                      })
+                      .then(async(res) => {
+                        const userNotifications = await res.json();
+                        const sentTo = userNotifications.notifications.outgoingNotifications.reduce((users, notification) =>
+                            notification.type === 'chat_request' ? [...users, notification.receiver] : users, []);
+                        const receivedFrom = userNotifications.notifications.incomingNotifications.reduce((users, notification) =>
+                            notification.type === 'chat_request' ? [...users, notification.sender] : users, []);
+                        setSentToUsers(sentTo);
+                        setReceivedFromUsers(receivedFrom); 
+                      })
+                }
+                getUserNotifications()
+            }
+        }
+    }, [status])
 
     return (status === 'authenticated' ?
         <>
@@ -37,6 +62,7 @@ export default function Profile() {
                 <Layout>
                     <Header>
                         <PageHeader
+                            profile
                             session={session} />
                     </Header>
                     <div className='flex justify-start p-3'>
@@ -48,7 +74,10 @@ export default function Profile() {
                                 <ProfileInfo
                                     session={session}
                                     profileUser={query.user}
-                                    profileData={profileData}/>
+                                    profileData={profileData}
+                                    setProfileData={setProfileData}
+                                    sentToUsers={sentToUsers}
+                                    receivedFromUsers={receivedFromUsers}/>
                             </div>
                         </Card>
                     </div>

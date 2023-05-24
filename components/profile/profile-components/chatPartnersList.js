@@ -1,9 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Avatar, List, Row } from 'antd';
 import VirtualList from 'rc-virtual-list';
-import {
-    UserOutlined,
-} from '@ant-design/icons';
 import Link from 'next/link';
 
 const ChatPartnerList = ({ chatPartners, currentUser }) => {
@@ -42,10 +39,7 @@ const ChatPartnerList = ({ chatPartners, currentUser }) => {
             {(item) => (
                 <List.Item key={item}>
                     <List.Item.Meta
-                        avatar=
-                        {<Avatar
-                            //src={item.picture.large} 
-                            icon={<UserOutlined />} />}
+                        avatar={<Avatar size="large" src={'/default-profile-image.png'} />}
                         title={
                             <Row justify='start'>
                                 <Link href={`/profile?user=${item}`}>

@@ -1,11 +1,8 @@
-import { Row, Col, Card } from 'antd';
-import {
-    MehTwoTone
-} from '@ant-design/icons';
+import { Row, Col, Card, Avatar } from 'antd';
 import styles from './chat.module.css';
 import Link from 'next/link';
 
-export default function PageSider({ setCurrentActiveChat, chatPartners}) {
+export default function PageSider({ setCurrentActiveChat, currentActiveChat,chatPartners}) {
 
     const handleCurrentActiveChatChange = (currentActiveChatUsername) => {
         setCurrentActiveChat(currentActiveChatUsername)
@@ -20,12 +17,12 @@ export default function PageSider({ setCurrentActiveChat, chatPartners}) {
             </Row>
             {chatPartners.map(partner => (
             <Row 
-                className={styles.chatRow}
+                className={currentActiveChat === partner ? styles.currentChatRow : styles.chatRow}
                 key={partner}
                 onClick={() => handleCurrentActiveChatChange(partner)}
             >
                 <Col span={4}>
-                    <MehTwoTone className={styles.chatUserPhoto}/>
+                    <Avatar size="large" src={'/default-profile-image.png'} />
                 </Col>
                 <Col span={20}>
                     <h4 className={styles.chatUserName}>

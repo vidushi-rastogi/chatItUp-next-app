@@ -10,6 +10,7 @@ import { NotificationDateFormat } from '../../shared-components/formatDate';
 import NotificationDescription from '../../shared-components/notificationDescription';
 import { handleAcceptRequest, handleRemoveRequest } from './actionHandlers';
 import styles from '../layout.module.css';
+import Link from 'next/link';
 
 const NotificationBody = ({
   notifications,
@@ -32,7 +33,7 @@ const NotificationBody = ({
               <Avatar icon={<BellFilled />} />
             </div>
             <div className='mr-3 flex flex-col'>
-              <span className='font-bold'>@{item.sender} </span>
+              <Link href={`/profile?user=${item.sender}`}><span className='font-bold'>@{item.sender} </span></Link>
               <span className='text-xs'><NotificationDescription type='incoming' notificationType={item.type} /></span>
             </div>
             <div>
@@ -98,7 +99,6 @@ const Notifications = ({
 
   useEffect(() => {
     if (userNotifications?.incomingNotifications) {
-      let n = userNotifications?.incomingNotifications?.slice(0, 5);
       setNotifications(userNotifications?.incomingNotifications?.slice(0, 5));
     }
   }, [userNotifications])
@@ -119,14 +119,9 @@ const Notifications = ({
           setChatPartners={setChatPartners}
         />
       </div>
-      {
-        notifications.length > 0 ?
-          <div className='text-center'>
-            <a className='mt-2' onClick={() => window.location.href = '/notifications'}>View all</a>
-          </div>
-          :
-          null
-      }
+      <div className='text-center'>
+        <a className='mt-2' onClick={() => window.location.href = '/notifications'}>View all</a>
+      </div>
     </div>
   );
 

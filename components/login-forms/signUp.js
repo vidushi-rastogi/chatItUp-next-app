@@ -18,6 +18,8 @@ export default function SignUp() {
         username: values.username,
         password: values.password,
         chatPartners: [],
+        profileImage: '/default-profile-image.png',
+        profileStatus: 'Hey there I am on ChatItUp!'
       }),
       headers: {
         'Content-Type': 'application/json'
