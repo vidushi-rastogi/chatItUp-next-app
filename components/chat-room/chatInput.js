@@ -5,6 +5,7 @@ import {
     SendOutlined
 } from '@ant-design/icons';
 import { useState } from 'react';
+import EmojiPicker from 'emoji-picker-react';
 
 const popNotification = (type, message) => {
     notification[type]({
@@ -18,6 +19,11 @@ export default function ChatInput({
     setUserChats,
 }) {
     const [message, setMessage] = useState('');
+    const [showEmoji, setShowEmoji] = useState(false);
+
+    const handleEmojiClick = async (e) => {
+        setMessage(message + e.emoji);
+    }
 
     const handleSendMessage = async () => {
         if (message) {
@@ -57,7 +63,11 @@ export default function ChatInput({
         }
     };
 
-    const emoticonsSelect = <SmileOutlined />;
+    const emoticonsSelect = <SmileOutlined onClick={() => {
+        if (showEmoji) setShowEmoji(false);
+        else setShowEmoji(true)
+    }
+    } />;
 
     const attachAndSendOptions = (
         <Row style={{ width: '90px' }}>
@@ -70,9 +80,7 @@ export default function ChatInput({
         </Row>
     )
 
-    return <div style={{
-        // maxHeight: '10vh'
-    }}>
+    return <div>
         <Affix offsetBottom={0}>
             <Row>
                 <Col span={24}>
@@ -82,7 +90,9 @@ export default function ChatInput({
                             value={message}
                             addonBefore={emoticonsSelect}
                             addonAfter={attachAndSendOptions}
-                            placeholder='Enter your message here...' />
+                            onKeyDown={(e)=> e.key === 'Enter' && handleSendMessage()}
+                            placeholder="Enter your message here..." />
+                        {showEmoji && <EmojiPicker width="100%" onEmojiClick={handleEmojiClick}></EmojiPicker>}
                     </Card>
                 </Col>
             </Row>

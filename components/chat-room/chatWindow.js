@@ -30,12 +30,12 @@ export default function ChatLog({ userChats, session, currentActiveChat }) {
     return <div style={{
         padding: '20px',
         overflowY: 'auto',
-        height: '75vh'
+        height: '86.5vh'
     }}>
         {activeChat ? activeChat.chats.map(chatLog =>
             <Row key={chatLog.username} className={chatLog.username === session.user.username ? styles.chatUserSide : styles.chatOtherSide}>
                 <Col className={chatLog.username === session.user.username ? styles.chatUserBubble : styles.chatOtherBubble}>
-                    <p style={{ margin: '0', padding: '0' }}>{chatLog.content}</p>
+                <p className="text-black m-0 p-0">{chatLog.content}</p>
                     <div style={{ textAlign: 'end', paddingTop: '3px' }}>
                         <ChatDate date={chatLog.timestamp}/>
                     </div>

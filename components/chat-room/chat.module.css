@@ -3,6 +3,7 @@
     background-color: #ECECEC;
     padding: 10px;
     min-width: 300px;
+    padding-bottom: 50px;
     overflow-y: hidden;
 }
 .chatRow {

@@ -29,29 +29,33 @@ const ChatPartnerList = ({ chatPartners, currentUser }) => {
         }
     };
 
-    return <List>
-        <VirtualList
-            data={data}
-            height={350}
-            itemHeight={47}
-            onScroll={onScroll}
-        >
-            {(item) => (
-                <List.Item key={item}>
-                    <List.Item.Meta
-                        avatar={<Avatar size="large" src={'/default-profile-image.png'} />}
-                        title={
-                            <Row justify='start'>
-                                <Link href={`/profile?user=${item}`}>
-                                    {item === currentUser ? 'you' : `@${item}`}
-                                </Link>
-                            </Row>
-                        }
-                    />
-                </List.Item>
-            )}
-        </VirtualList>
-    </List>
+    return data.length ? <List>
+    <VirtualList
+        data={data}
+        height={350}
+        itemHeight={47}
+        onScroll={onScroll}
+    >
+        {(item) => (
+            <List.Item key={item}>
+                <List.Item.Meta
+                    avatar={<Avatar size="large" src={'/default-profile-image.png'} />}
+                    title={
+                        <Row justify='start'>
+                            <Link href={`/profile?user=${item}`}>
+                                {item === currentUser ? 'you' : `@${item}`}
+                            </Link>
+                        </Row>
+                    }
+                />
+            </List.Item>
+        )}
+    </VirtualList>
+</List> 
+    :
+    <div>
+        <p className='italic'>Be their first chat partner. :)</p>
+    </div>
 }
 
 export default ChatPartnerList;
