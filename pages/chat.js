@@ -6,10 +6,12 @@ import ChatLog from '../components/chat-room/chatWindow';
 import ChatInput from '../components/chat-room/chatInput';
 import Refresh from '../components/shared-components/refresh';
 import { useEffect, useState } from 'react';
+import { useRouter } from "next/router";
 
 const { Header, Sider, Content } = Layout;
 
 export default function Chat() {
+  const { query } = useRouter();
   const [currentActiveChat, setCurrentActiveChat] = useState('');
   const [chatPartners, setChatPartners] = useState([]);
   const [userChats, setUserChats] = useState([]);
@@ -51,8 +53,11 @@ export default function Chat() {
         storeUserDetails();
         getUserChats();
       }
+      if (query.chat) {
+        setCurrentActiveChat(query.chat);
+      }
     }
-  }, [status, flag, session])
+  }, [status, flag, session, query])
 
   return status === 'authenticated' ? <Layout>
     <Header>
@@ -81,8 +86,8 @@ export default function Chat() {
       <Sider>
         <PageSider
           setCurrentActiveChat={setCurrentActiveChat}
-          chatPartners={chatPartners}
           currentActiveChat={currentActiveChat}
+          chatPartners={chatPartners}
         />
       </Sider>
     </Layout>

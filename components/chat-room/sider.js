@@ -1,9 +1,7 @@
 import { Row, Col, Card, List, Avatar } from 'antd';
-import {
-    MehTwoTone
-} from '@ant-design/icons';
 import VirtualList from 'rc-virtual-list';
 import styles from './chat.module.css';
+import Link from 'next/link';
 
 export default function PageSider({ setCurrentActiveChat, chatPartners, currentActiveChat }) {
 
@@ -32,8 +30,8 @@ export default function PageSider({ setCurrentActiveChat, chatPartners, currentA
                             onClick={() => handleCurrentActiveChatChange(partner)}
                         >
                             <List.Item.Meta
-                                avatar={<MehTwoTone className={styles.chatUserPhoto} />}
-                                title={<h4 className={styles.chatUserName}>@{partner}</h4>}
+                                avatar={<Avatar size="large" src={'/default-profile-image.png'} />}
+                                title={<Link href={`/profile?user=${partner}`}><h4 className={styles.chatUserName}>@{partner}</h4></Link>}
                             />
                         </List.Item>
                     )}

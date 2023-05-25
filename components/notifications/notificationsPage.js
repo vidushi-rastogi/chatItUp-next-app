@@ -7,6 +7,7 @@ import {
 import ActionButtons from './actionButtons';
 import NotificationDescription from '../shared-components/notificationDescription';
 import { NotificationDateFormat } from '../shared-components/formatDate';
+import Link from 'next/link';
 
 const Description = ({ type, notificationType, timestamp }) => (
     <>
@@ -50,10 +51,9 @@ export default function NotificationsPage({ type, notifications, session }) {
                         <List.Item.Meta
                             avatar=
                             {<Avatar
-                                //src={item.picture.large} 
                                 icon={<UserOutlined />} />}
                             description={<Description type={type} notificationType={item.type} timestamp={item.timestamp}/>}
-                            title={type === 'incoming' ? <p>{item.sender}</p> : <p>{item.receiver}</p>}
+                            title={type === 'incoming' ? <Link href={`/profile?user=${item.sender}`}><p>{item.sender}</p></Link> : <Link href={`/profile?user=${item.receiver}`}><p>{item.receiver}</p></Link>}
                         />
                         <ActionButtons 
                             type={type} 

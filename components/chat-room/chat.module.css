@@ -14,13 +14,19 @@
 .chatRow:hover{
     background-color: aliceblue;
 }
-.chatUserName {
-    margin-top: -20px;
-}
-.chatUserPhoto {
-    font-size: 30px;
-}
 
+.currentChatRow {
+    border-bottom: 1px solid gray;
+    background-color: rgb(210, 234, 255);
+    padding: 20px 10px 20px 10px;
+    cursor: pointer;
+}
+.currentChatRow:hover{
+    background-color: aliceblue;
+}
+.chatUserName {
+    margin: 10px 0px 0px 10px;
+}
 
 .chatUserSide {
     display: flex;

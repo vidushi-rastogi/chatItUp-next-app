@@ -41,8 +41,7 @@ export default function Notifications() {
                     session={session} />
             </Header>
             <div className='pt-0 pr-3 pb-0 pl-3'>
-
-                <div style={{ textAlign: 'center' }}><h1>Notifications</h1></div>
+                <div className='text-center'><h1>Notifications</h1></div>
                 <Card>
                     <Row justify='space-between' style={{ marginBottom: '20px' }}>
                         <BackToHome />

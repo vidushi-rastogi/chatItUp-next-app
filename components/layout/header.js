@@ -1,6 +1,5 @@
 import { Row, Col, Popover, Modal } from 'antd';
 import {
-    BellFilled,
     SettingFilled,
 } from '@ant-design/icons';
 import styles from './layout.module.css';
@@ -14,6 +13,7 @@ const settings = ['Profile Settings', 'Privacy Settings', 'Log Out'];
 export default function PageHeader({
     home,
     notification,
+    profile,
     session,
     chatPartners,
     setChatPartners,
@@ -25,6 +25,9 @@ export default function PageHeader({
     const handleSettingOptionClick = (option) => {
         if (option === 'Log Out') {
             setShowLogOutModal(true);
+        }
+        else if (option === 'Profile Settings') {
+            window.location.href = `/profile?user=${session.user.username}`;
         }
         else {
             window.location.href = '/';
@@ -71,7 +74,7 @@ export default function PageHeader({
             <Col span={3} className={styles.header}>
                 <h1>ChatItUp!</h1>
             </Col>
-            {!home && !notification ? <Col span={6}>
+            {!home && !notification && !profile ? <Col span={6}>
                 <SearchChatPartner
                     session={session}
                     chatPartners={chatPartners}
@@ -82,7 +85,7 @@ export default function PageHeader({
                 <>
                     <Col span={2}>
                         <Row>
-                            {!notification ?
+                            {!notification && !profile ?
                                 <Col span={12}>
                                     <NavNotification
                                         session={session}

@@ -4,6 +4,7 @@ import {
   UserAddOutlined,
   CheckOutlined,
 } from '@ant-design/icons';
+import Link from 'next/link';
 
 const { Option } = Select;
 
@@ -111,7 +112,7 @@ export default function SearchChatPartner({ session, chatPartners, userNotificat
       {searchedUsers.map(user =>
         <Option key={user.username} value={user.username}>
           <Row justify='space-between'>
-            <Col>{user.username}</Col>
+            <Col><Link href={`/profile?user=${user.username}`}>{user.username}</Link></Col>
             <Col>
               {user.addon ? 
                 <Tag>{user.addon}</Tag> 

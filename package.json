@@ -10,8 +10,9 @@
   },
   "dependencies": {
     "antd": "^5.0.0",
+    "antd-img-crop": "^4.12.2",
     "classnames": "^2.3.2",
-    "emoji-picker-react": "^4.4.7",
+    "emoji-picker-react": "^4.4.9",
     "moment": "^2.29.4",
     "mongoose": "^6.8.1",
     "next": "13.0.4",

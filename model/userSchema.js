@@ -10,6 +10,15 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    profileImage: {
+        type: String,
+        required: true,
+        default: ''
+    },
+    profileStatus: {
+        type: String,
+        default: ''
+    },
     chatPartners: {
         type: Array,
         default: [],
