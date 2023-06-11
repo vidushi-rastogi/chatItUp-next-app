@@ -58,7 +58,8 @@ const ProfileInfo =
         receivedFromUsers,
     }) => {
         const currentUser = session.user.username;
-        const chatPartners = session.user.chatPartners;
+        const currentUserDetails = JSON.parse(localStorage.getItem('userDetails'));
+        const [chatPartners, setChatPartners] = useState(currentUserDetails.chatPartners);
         const [statusEditMode, setStatusEditMode] = useState(false);
         const [profileStatus, setProfileStatus] = useState('');
 
@@ -88,6 +89,45 @@ const ProfileInfo =
 
         const handleEmojiClick = (e) => {
             setProfileStatus(profileStatus + e.emoji);
+        }
+
+        const removeChatPartner = async (currentUser, username) => {
+            const res = await fetch('/api/removeChatPartner', {
+                method: 'POST',
+                body: JSON.stringify({
+                    firstUsername: currentUser,
+                    secondUsername: username
+                }),
+                header: {
+                    'Content-Type': 'application/json'
+                }
+            })
+
+            const status = res.status;
+            const body = await res.json();
+            if (status === 200) {
+                const updatedChatPartners = chatPartners.filter((partner) => partner !== username);
+                setChatPartners(updatedChatPartners);
+                localStorage.setItem('userDetails', JSON.stringify({
+                    ...JSON.parse(localStorage.getItem('userDetails')),
+                    chatPartners: updatedChatPartners
+                }))
+                popNotification('success', `@${username} has been removed from your chat list`);
+            }
+            else {
+                popNotification('error', `Something went wrong while removing ${username} from your chat list :(`)
+            }
+        }
+
+        const confirmDeletePartner = (username) => {
+            notification.open({
+                message: `Sure want to remove @${username} from your chat friend list?`,
+                description:
+                    <>
+                        <Button shape='circle' icon={<CheckOutlined />} onClick={async () => await removeChatPartner(currentUser, username)} />
+                    </>,
+                duration: 2
+            });
         }
 
         return <>
@@ -128,9 +168,18 @@ const ProfileInfo =
                                             }
                                             {
                                                 chatPartners.includes(profileUser) &&
-                                                <Button size='small' className='ml-2'>
-                                                    <Link href={`/chat?chat=${profileUser}`}>Message</Link>
-                                                </Button>
+                                                <>
+                                                    <Button size='small' className='ml-2'>
+                                                        <Link href={`/chat?chat=${profileUser}`}>Message</Link>
+                                                    </Button>
+                                                    <Button
+                                                        size='small'
+                                                        className='ml-2'
+                                                        onClick={() => confirmDeletePartner(profileUser)}
+                                                    >
+                                                        Remove Chat Partner
+                                                    </Button>
+                                                </>
                                             }
                                         </div>
                                     }
@@ -138,7 +187,6 @@ const ProfileInfo =
                                 {currentUser === profileUser ?
                                     <div className='grid grid-cols-7 pr-5 pl-5'>
                                         <Input
-                                            placeholder="Borderless"
                                             bordered={false}
                                             disabled={!statusEditMode}
                                             value={profileStatus}
@@ -172,7 +220,7 @@ const ProfileInfo =
                     </Col>
                     <Col sm={9} md={8}>
                         <h3>Chat Partners</h3>
-                        <ChatPartnerList chatPartners={profileData.chatPartners} currentUser={currentUser} />
+                        <ChatPartnerList chatPartners={profileData.chatPartners} currentUser={currentUser} profileUser={profileUser}/>
                     </Col>
                 </Row>
             </Card>

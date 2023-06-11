@@ -26,11 +26,11 @@ export default function PageSider({ setCurrentActiveChat, chatPartners, currentA
                         <List.Item
                             key={partner}
                             className={styles.chatRow}
-                            style={{ backgroundColor: partner === currentActiveChat && "#bde0ff" }}
+                            style={{ backgroundColor: partner === currentActiveChat && '#bde0ff' }}
                             onClick={() => handleCurrentActiveChatChange(partner)}
                         >
                             <List.Item.Meta
-                                avatar={<Avatar size="large" src={'/default-profile-image.png'} />}
+                                avatar={<Avatar size='large' src={'/default-profile-image.png'} />}
                                 title={<Link href={`/profile?user=${partner}`}><h4 className={styles.chatUserName}>@{partner}</h4></Link>}
                             />
                         </List.Item>

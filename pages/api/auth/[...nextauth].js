@@ -2,6 +2,12 @@ import NextAuth from 'next-auth/next';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import connect from '../../../lib/mongodb';
 import User from '../../../model/userSchema';
+import bcrypt from 'bcrypt';
+
+const verifyPassword = async (password, hashedPassword) => {
+    const result = await bcrypt.compare(password, hashedPassword);
+    return result;
+}
 
 const authOptions = {
     session: {
@@ -23,8 +29,10 @@ const authOptions = {
                 if (!user) {
                     throw new Error(`User ${username} not found!`);
                 }
-                if (user && password !== user.password) {
-                    throw new Error('You have entered invalid password');
+                else {
+                    const isPasswordValid = await verifyPassword(password, user.password);
+                    if (!isPasswordValid)
+                        throw new Error('You have entered invalid password');
                 }
                 return Promise.resolve(user);
             }
