@@ -8,7 +8,7 @@ import { signOut } from 'next-auth/react';
 import SearchChatPartner from './header-components/searchChatPartner';
 import NavNotification from './header-components/notifications';
 
-const settings = ['Profile Settings', 'Privacy Settings', 'Log Out'];
+const settings = ['Profile Settings', 'Log Out'];
 
 export default function PageHeader({
     home,

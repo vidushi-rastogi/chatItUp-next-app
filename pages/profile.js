@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
 import { Card, Layout, Result } from 'antd';
 import PageHeader from '../components/layout/header';
-import ProfileInfo from "../components/profile/profileInfo";
-import { useSession } from "next-auth/react";
-import { useRouter } from "next/router";
-import BackToHome from "../components/shared-components/backToHome";
+import ProfileInfo from '../components/profile/profileInfo';
+import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/router';
+import BackToHome from '../components/shared-components/backToHome';
 
 const { Header } = Layout;
 
@@ -54,7 +54,7 @@ export default function Profile() {
                 getUserNotifications()
             }
         }
-    }, [status])
+    }, [status, session])
 
     return (status === 'authenticated' ?
         <>
@@ -70,7 +70,7 @@ export default function Profile() {
                     </div>
                     <div className='pt-0 pr-3 pb-0 pl-3 text-center'>
                         <Card>
-                            <div className="container my-4 h-screen">
+                            <div className='container my-4 h-screen'>
                                 <ProfileInfo
                                     session={session}
                                     profileUser={query.user}

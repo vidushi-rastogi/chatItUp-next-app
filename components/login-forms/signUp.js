@@ -1,4 +1,4 @@
-import { Form, Input, Button, Card, notification } from 'antd';
+import { Form, Input, Button, Card, notification, message } from 'antd';
 import { signIn } from 'next-auth/react';
 import styles from './loginForm.module.css';
 
@@ -12,36 +12,41 @@ export default function SignUp() {
   }
 
   const handleSubmit = async (values) => {
-    const res = await fetch('/api/auth/register', {
-      method: 'POST',
-      body: JSON.stringify({
-        username: values.username,
-        password: values.password,
-        chatPartners: [],
-        profileImage: '/default-profile-image.png',
-        profileStatus: 'Hey there I am on ChatItUp!'
-      }),
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    })
-    const status = res.status;
-    if (status === 200) {
-      const response = await signIn('credentials', {
-        username: values.username,
-        password: values.password,
-        redirect: false
-      })
-      if(response.error) {
-        popNotification('error', response.error);
-      }
-      else {
-        window.location.href = '/chat';
-        popNotification('success', null);
-      }
+    if (values.username.includes('_') || values.username.includes(' ')) {
+      message.error('Username can not contain \'_\' or spaces');
     }
     else {
-      popNotification('error', 'Something went wrong while registering your account :(')
+      const res = await fetch('/api/auth/register', {
+        method: 'POST',
+        body: JSON.stringify({
+          username: values.username,
+          password: values.password,
+          chatPartners: [],
+          profileImage: '/default-profile-image.png',
+          profileStatus: 'Hey there I am on ChatItUp!'
+        }),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+      const status = res.status;
+      if (status === 200) {
+        const response = await signIn('credentials', {
+          username: values.username,
+          password: values.password,
+          redirect: false
+        })
+        if(response.error) {
+          popNotification('error', response.error);
+        }
+        else {
+          window.location.href = '/chat';
+          popNotification('success', null);
+        }
+      }
+      else {
+        popNotification('error', 'Something went wrong while registering your account :(')
+      }
     }
   }
 
@@ -55,7 +60,7 @@ export default function SignUp() {
       <Form.Item
         label='Username'
         name='username'
-        rules={[{ required: true, message: 'Please input your username!' }]}
+        rules={[{ required: true, message: 'Please enter your username!' }]}
       >
         <Input />
       </Form.Item>
@@ -63,7 +68,7 @@ export default function SignUp() {
       <Form.Item
         label='Password'
         name='password'
-        rules={[{ required: true, message: 'Please input your password!' }]}
+        rules={[{ required: true, message: 'Please enter your password!' }]}
       >
         <Input.Password />
       </Form.Item>
