@@ -22,7 +22,7 @@ Sign In or Sign Up on [MongoDB Atlas](https://account.mongodb.com/account/login)
 You will receive an URI for your cluster, save it.
 
 ## To run the project
-1. Clone the git repository into your desired directory
+1. Clone the git repository into your desired directory.
     ```
     git clone https://github.com/vidushi-rastogi/chatItUp-next-app.git
     ```
