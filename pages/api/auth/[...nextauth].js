@@ -1,3 +1,4 @@
+require('dotenv').config();
 import NextAuth from 'next-auth/next';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import connect from '../../../lib/mongodb';
@@ -13,6 +14,7 @@ const authOptions = {
     session: {
         strategy: 'jwt',
     },
+    secret: process.env.NEXTAUTH_SECRET,
     providers: [
         CredentialsProvider({
             type: 'credentials',
