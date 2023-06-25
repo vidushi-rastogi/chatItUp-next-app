@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Avatar, List } from 'antd';
 import VirtualList from 'rc-virtual-list';
 import {
@@ -18,7 +18,12 @@ const Description = ({ type, notificationType, timestamp }) => (
 
 export default function NotificationsPage({ type, notifications, session }) {
     const totalNotifications = notifications.length;
-    const [data, setData] = useState(notifications.slice(0, 5));
+    const [data, setData] = useState([]);
+
+    useEffect(() => {
+        if (notifications.length)
+         setData(notifications.slice(0, 5))
+    }, [notifications]);
 
     const appendData = () => {
         if (data.length < totalNotifications) {
